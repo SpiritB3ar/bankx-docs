@@ -1,0 +1,172 @@
+<mxfile host="app.diagrams.net" modified="2026-07-15T10:30:00.000Z" agent="opencode" version="21.0.0" type="device">
+  <diagram id="kafka-topics" name="Kafka Topics">
+    <mxGraphModel dx="1800" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Kafka Topics - Event-Driven Communication" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="700" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="All topics, producers, consumers, and data flow between microservices" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="400" y="55" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka_broker" value="Apache Kafka&#xa;Message Broker&#xa;(localhost:9092)" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="850" y="400" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_account" value="Account Service&#xa;:8082" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="150" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_credit" value="Credit Service&#xa;:8083" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="100" y="700" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_transaction" value="Transaction Service&#xa;:8084" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1600" y="150" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_fraud" value="Fraud Detection&#xa;:8085" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1600" y="400" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="svc_yanki" value="Yanki Service&#xa;:8088" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1600" y="700" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="topic1" value="debt-check-request&#xa;(partitions: 3)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="140" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="topic2" value="debt-check-response&#xa;(partitions: 3)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="280" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="topic3" value="credit-card-check-request&#xa;(partitions: 3)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="680" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="topic4" value="credit-card-check-response&#xa;(partitions: 3)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="820" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="topic5" value="transaction-events" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1100" y="140" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="topic6" value="transaction-completed" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1100" y="280" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="topic7" value="yanki-link-card" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1100" y="820" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="topic8" value="debit-card-payment" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1100" y="680" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t1_pub" value="DebtCheckProducer&#xa;sends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="svc_account" target="topic1" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t1_con" value="DebtCheckConsumer&#xa;consumes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#6c8ebf;fontSize=9;dashed=1" edge="1" source="topic1" target="svc_credit" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="585" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_pub" value="DebtCheckProducer&#xa;sends response" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="svc_credit" target="topic2" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="450" />
+              <mxPoint x="180" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_con" value="DebtCheckConsumer&#xa;receives" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#6c8ebf;fontSize=9;dashed=1" edge="1" source="topic2" target="svc_account" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_pub" value="CreditCardCheckProducer&#xa;sends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="svc_account" target="topic3" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="600" />
+              <mxPoint x="590" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_con" value="CreditCardCheckConsumer&#xa;consumes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#6c8ebf;fontSize=9;dashed=1" edge="1" source="topic3" target="svc_credit" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_pub" value="CreditCardCheckResponse&#xa;Producer sends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="svc_credit" target="topic4" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="900" />
+              <mxPoint x="590" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_none" value="No consumer yet" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=9;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="520" y="900" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="t5_pub" value="TransactionEventProducer&#xa;sends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;fontSize=9" edge="1" source="svc_transaction" target="topic5" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t5_con" value="TransactionEventConsumer&#xa;Gemini AI analysis" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#b85450;fontSize=9;dashed=1" edge="1" source="topic5" target="svc_fraud" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t6_pub" value="TransactionEventProducer&#xa;sends completed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;fontSize=9" edge="1" source="svc_transaction" target="topic6" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1685" y="250" />
+              <mxPoint x="1185" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t6_con" value="DebitCardEventConsumer&#xa;updates debit card" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#6c8ebf;fontSize=9;dashed=1" edge="1" source="topic6" target="svc_credit" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1185" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t7_pub" value="YankiEventProducer&#xa;link card event" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="svc_yanki" target="topic7" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t7_none" value="No consumer yet" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=9;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="1110" y="890" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="t8_pub" value="DebitCardEventProducer&#xa;payment event" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#b85450;fontSize=9" edge="1" source="svc_credit" target="topic8" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="760" />
+              <mxPoint x="1175" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t8_none" value="No consumer yet" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=9;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="1110" y="760" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_zone" value="TOPIC LEGEND" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=1;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="100" y="980" width="1200" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" value="Kafka Topics Summary:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="130" y="1010" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="1. debt-check-request: account-service sends customerId to credit-service to check overdue debt before account creation" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1040" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="2. debt-check-response: credit-service responds with hasOverdueDebt boolean to account-service" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1065" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l4" value="3. credit-card-check-request: account-service sends VIP profile check to credit-service" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1090" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l5" value="4. credit-card-check-response: credit-service responds with hasActiveCreditCard (response producer exists, consumer pending)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1115" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l6" value="5. transaction-events: transaction-service publishes transaction data for AI fraud analysis by fraud-detection-service (Gemini)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1140" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l7" value="6. transaction-completed: transaction-service notifies credit-service when transaction completes (debit card balance update)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1165" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l8" value="7. yanki-link-card: yanki-service publishes event when user links debit card (consumer pending)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1190" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l9" value="8. debit-card-payment: credit-service publishes debit card payment event (consumer pending)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1215" width="700" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l_note" value="Note: Topics are auto-created by Kafka when first message is sent. Formal topic beans defined in KafkaTopicConfig for debt-check and credit-card-check topics." style="text;html=1;strokeColor=#b85450;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=2;whiteSpace=wrap" vertex="1" parent="1">
+          <mxGeometry x="130" y="1250" width="1000" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

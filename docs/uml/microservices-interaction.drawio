@@ -1,0 +1,190 @@
+<mxfile host="app.diagrams.net" modified="2026-07-15T10:00:00.000Z" agent="opencode" version="21.0.0" type="device">
+  <diagram id="microservices-interaction" name="Microservices Interaction">
+    <mxGraphModel dx="1800" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Banking System - Microservices Interaction Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="800" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="All 10 microservices: REST via Gateway + Kafka event-driven communication" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="500" y="55" width="800" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="client" value="External Client&#xa;(Postman)" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="600" width="80" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="infra_zone" value="INFRASTRUCTURE SERVICES" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;strokeWidth=2;dashed=1;fontSize=13;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="250" y="80" width="1300" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="eureka" value="Eureka Server&#xa;:8761" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="130" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="config" value="Config Server&#xa;:8888" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="130" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gateway" value="API Gateway&#xa;Spring Cloud&#xa;:8080 + JWT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="700" y="120" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="auth" value="Auth Service&#xa;:8086 + JWT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="910" y="130" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mongodb" value="MongoDB&#xa;(7 databases)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1110" y="120" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="redis" value="Redis&#xa;Cache" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1300" y="120" width="100" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka" value="Apache Kafka&#xa;Message Broker" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1100" y="580" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="biz_zone" value="BUSINESS MICROSERVICES" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#82b366;strokeWidth=2;dashed=1;fontSize=13;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="250" y="300" width="1300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="customer" value="Customer Service&#xa;:8089&#xa;customer_db" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="280" y="360" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="account" value="Account Service&#xa;:8082&#xa;account_db" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="360" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="credit" value="Credit Service&#xa;:8083&#xa;credit_db" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="720" y="360" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="transaction" value="Transaction Service&#xa;:8084&#xa;transaction_db" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="940" y="360" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="yanki" value="Yanki Service&#xa;:8088&#xa;yanki_db" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1170" y="360" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fraud" value="Fraud Detection&#xa;:8085&#xa;fraud_db + Gemini AI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1390" y="350" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="client_gw" value="HTTP/REST" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#6c8ebf" edge="1" source="client" target="gateway" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_auth" value="/auth/login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;fontSize=9" edge="1" source="gateway" target="auth" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_customer" value="/api/customers/**" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="gateway" target="customer" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_account" value="/api/accounts/**" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="gateway" target="account" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_credit" value="/api/credits/**" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="gateway" target="credit" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_transaction" value="/api/transactions/**" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="gateway" target="transaction" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_yanki" value="/api/yanki/**" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="gateway" target="yanki" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_fraud" value="/api/fraud/**" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#b85450;fontSize=9" edge="1" source="gateway" target="fraud" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eureka_gw" value="register" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#9673a6;dashed=1;fontSize=9" edge="1" source="gateway" target="eureka" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eureka_auth" value="register" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#9673a6;dashed=1;fontSize=9" edge="1" source="auth" target="eureka" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="config_gw" value="pull config" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#9673a6;dashed=1;fontSize=9" edge="1" source="gateway" target="config" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka_tx" value="transaction-events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;fontSize=9;fontStyle=1" edge="1" source="transaction" target="kafka" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka_fraud" value="consume" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#b85450;fontSize=9" edge="1" source="kafka" target="fraud" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka_debt_req" value="debt-check-request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;fontSize=9;fontStyle=1" edge="1" source="account" target="kafka" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka_debt_resp" value="debt-check-response" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9;fontStyle=1;dashed=1" edge="1" source="kafka" target="credit" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kafka_cc_req" value="credit-card-check-request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;fontSize=9;fontStyle=1" edge="1" source="account" target="kafka" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="575" y="520" />
+              <mxPoint x="1180" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kafka_cc_resp" value="credit-card-check-response" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9;fontStyle=1;dashed=1" edge="1" source="kafka" target="credit" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1260" y="520" />
+              <mxPoint x="795" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kafka_yanki" value="yanki-events" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;fontSize=9;fontStyle=1" edge="1" source="yanki" target="kafka" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1245" y="520" />
+              <mxPoint x="1245" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend_zone" value="LEGEND" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=1;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="250" y="720" width="900" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6" vertex="1" parent="1">
+          <mxGeometry x="280" y="760" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1t" value="Infrastructure (Eureka, Config)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="310" y="760" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656" vertex="1" parent="1">
+          <mxGeometry x="280" y="790" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2t" value="Gateway + Auth (JWT)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="310" y="790" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366" vertex="1" parent="1">
+          <mxGeometry x="280" y="820" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3t" value="Business Microservices" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="310" y="820" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="280" y="850" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4t" value="AI/ML Services (Gemini)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="310" y="850" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;strokeColor=#6c8ebf" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="890" as="sourcePoint" />
+            <mxPoint x="300" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg5t" value="REST/HTTP (via Gateway)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="310" y="880" width="170" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="890" as="sourcePoint" />
+            <mxPoint x="550" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg6t" value="Kafka (publish)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="560" y="880" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg7" value="" style="endArrow=block;endFill=1;html=1;strokeWidth=2;strokeColor=#82b366;dashed=1" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="680" y="890" as="sourcePoint" />
+            <mxPoint x="700" y="890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg7t" value="Kafka (response/consume)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="710" y="880" width="160" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="port_summary" value="Service Ports: eureka=8761 | config=8888 | gateway=8080 | customer=8089 | account=8082 | credit=8083 | transaction=8084 | fraud=8085 | auth=8086 | yanki=8088" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=0" vertex="1" parent="1">
+          <mxGeometry x="250" y="930" width="1300" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

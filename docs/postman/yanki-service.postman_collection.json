@@ -1,0 +1,142 @@
+{
+  "info": {
+    "name": "Yanki Service",
+    "description": "Mobile wallet microservice (Yanki). Allows users to register wallets, send/receive payments via phone number, link debit cards, and check balances.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8088"
+    }
+  ],
+  "item": [
+    {
+      "name": "Register Wallet",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "documentNumber": "12345678",
+            "documentType": "DNI",
+            "phoneNumber": "+51987654321",
+            "imei": "356938035649820",
+            "email": "user@email.com"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/yanki/wallets",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "yanki", "wallets"]
+        }
+      }
+    },
+    {
+      "name": "Get Wallet",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/yanki/wallets/{{walletId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "yanki", "wallets", "{{walletId}}"]
+        }
+      }
+    },
+    {
+      "name": "Send Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "senderWalletId": "60f1a2b3c4d5e6f7a8b9c0d1",
+            "recipientPhoneNumber": "+51912345678",
+            "amount": 50.00,
+            "description": "Payment for dinner"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/yanki/wallets/send",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "yanki", "wallets", "send"]
+        }
+      }
+    },
+    {
+      "name": "Receive Payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "recipientWalletId": "60f1a2b3c4d5e6f7a8b9c0d2",
+            "senderPhoneNumber": "+51987654321",
+            "amount": 50.00,
+            "description": "Received payment"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/yanki/wallets/receive",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "yanki", "wallets", "receive"]
+        }
+      }
+    },
+    {
+      "name": "Link Debit Card",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "debitCardNumber": "4532015112830366",
+            "accountId": "60f1a2b3c4d5e6f7a8b9c0d1"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/yanki/wallets/{{walletId}}/link-debit-card",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "yanki", "wallets", "{{walletId}}", "link-debit-card"]
+        }
+      }
+    },
+    {
+      "name": "Get Balance",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/yanki/wallets/{{walletId}}/balance",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "yanki", "wallets", "{{walletId}}", "balance"]
+        }
+      }
+    }
+  ]
+}

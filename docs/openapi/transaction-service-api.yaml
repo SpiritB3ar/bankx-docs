@@ -1,0 +1,457 @@
+openapi: 3.0.3
+info:
+  title: Transaction Service API
+  description: Transaction Management Microservice for the Banking System.
+  version: 1.0.0
+  contact:
+    name: Banking System Team
+
+servers:
+  - url: http://localhost:8084
+
+tags:
+  - name: Transactions
+    description: Transaction Management operations
+  - name: Reports
+    description: Transaction Reports
+
+paths:
+  /api/v1/transactions:
+    post:
+      tags: [Transactions]
+      summary: Create a new transaction
+      operationId: createTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '200':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+    get:
+      tags: [Transactions]
+      summary: Find all transactions
+      operationId: findAll
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/transfer:
+    post:
+      tags: [Transactions]
+      summary: Transfer between accounts
+      operationId: transfer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+      responses:
+        '200':
+          description: Transfer processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+
+  /api/v1/transactions/{id}:
+    get:
+      tags: [Transactions]
+      summary: Find transaction by ID
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Transaction found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+    delete:
+      tags: [Transactions]
+      summary: Delete transaction
+      operationId: deleteTransaction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Transaction deleted
+
+  /api/v1/transactions/{id}/status:
+    put:
+      tags: [Transactions]
+      summary: Update transaction status
+      operationId: updateTransactionStatus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/TransactionStatus'
+      responses:
+        '200':
+          description: Status updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/{id}/cancel:
+    put:
+      tags: [Transactions]
+      summary: Cancel transaction
+      operationId: cancelTransaction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Transaction cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/account/{accountId}:
+    get:
+      tags: [Transactions]
+      summary: Find transactions by account ID
+      operationId: findByAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/customer/{customerId}:
+    get:
+      tags: [Transactions]
+      summary: Find transactions by customer ID
+      operationId: findByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/credit/{creditId}:
+    get:
+      tags: [Transactions]
+      summary: Find transactions by credit ID
+      operationId: findByCreditId
+      parameters:
+        - name: creditId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/account/{accountId}/last/{limit}:
+    get:
+      tags: [Transactions]
+      summary: Find last N transactions by account ID
+      operationId: findLastNTransactionsByAccountId
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/credit/{creditId}/last/{limit}:
+    get:
+      tags: [Transactions]
+      summary: Find last N transactions by credit ID
+      operationId: findLastNTransactionsByCreditId
+      parameters:
+        - name: creditId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/reports/date-range:
+    get:
+      tags: [Reports]
+      summary: Generate report by date range
+      operationId: generateReportByDateRange
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Report generated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/reports/account/{accountId}/date-range:
+    get:
+      tags: [Reports]
+      summary: Generate report by account and date range
+      operationId: generateReportByAccountIdAndDateRange
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Report generated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+  /api/v1/transactions/reports/customer/{customerId}/date-range:
+    get:
+      tags: [Reports]
+      summary: Generate report by customer and date range
+      operationId: generateReportByCustomerIdAndDateRange
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Report generated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionResponse'
+
+components:
+  schemas:
+    TransactionType:
+      type: string
+      enum:
+        - DEPOSIT
+        - WITHDRAWAL
+        - TRANSFER
+        - CREDIT_PAYMENT
+        - CREDIT_CHARGE
+        - DEBIT_CARD_PURCHASE
+        - CREDIT_CARD_PURCHASE
+        - YANKI_TRANSFER
+        - FEE
+        - INTEREST
+    TransactionStatus:
+      type: string
+      enum:
+        - PENDING
+        - APPROVED
+        - COMPLETED
+        - REJECTED
+        - CANCELLED
+        - FAILED
+        - UNDER_REVIEW
+    TransactionRequest:
+      type: object
+      properties:
+        transactionType:
+          $ref: '#/components/schemas/TransactionType'
+        customerId:
+          type: string
+        accountId:
+          type: string
+        creditId:
+          type: string
+        destinationAccountId:
+          type: string
+        amount:
+          type: number
+          format: decimal
+        currency:
+          type: string
+        description:
+          type: string
+    TransactionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        transactionType:
+          $ref: '#/components/schemas/TransactionType'
+        customerId:
+          type: string
+        accountId:
+          type: string
+        creditId:
+          type: string
+        destinationAccountId:
+          type: string
+        amount:
+          type: number
+          format: decimal
+        currency:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        transactionDate:
+          type: string
+          format: date-time
+        fee:
+          type: number
+          format: decimal
+        previousBalance:
+          type: number
+          format: decimal
+        newBalance:
+          type: number
+          format: decimal
+    TransferRequest:
+      type: object
+      properties:
+        sourceAccountId:
+          type: string
+        destinationAccountId:
+          type: string
+        amount:
+          type: number
+          format: decimal
+        currency:
+          type: string
+        description:
+          type: string
+        customerId:
+          type: string
+    TransferResponse:
+      type: object
+      properties:
+        sourceTransaction:
+          $ref: '#/components/schemas/TransactionResponse'
+        destinationTransaction:
+          $ref: '#/components/schemas/TransactionResponse'

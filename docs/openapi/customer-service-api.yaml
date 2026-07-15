@@ -1,0 +1,248 @@
+openapi: 3.0.3
+info:
+  title: Customer Service API
+  description: Customer Management Microservice for the Banking System.
+  version: 1.0.0
+  contact:
+    name: Banking System Team
+
+servers:
+  - url: http://localhost:8081
+
+tags:
+  - name: Customers
+    description: Customer Management operations
+
+paths:
+  /api/v1/customers:
+    post:
+      tags: [Customers]
+      summary: Create a new customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '200':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+    get:
+      tags: [Customers]
+      summary: Find all customers
+      operationId: findAllCustomers
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerResponse'
+
+  /api/v1/customers/{id}:
+    get:
+      tags: [Customers]
+      summary: Find customer by ID
+      operationId: findCustomerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Customer found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+    put:
+      tags: [Customers]
+      summary: Update customer
+      operationId: updateCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+    delete:
+      tags: [Customers]
+      summary: Delete customer
+      operationId: deleteCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Customer deleted
+
+  /api/v1/customers/type/{customerType}:
+    get:
+      tags: [Customers]
+      summary: Find customers by type
+      operationId: findCustomersByType
+      parameters:
+        - name: customerType
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/CustomerType'
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerResponse'
+
+components:
+  schemas:
+    CustomerType:
+      type: string
+      enum: [PERSONAL, BUSINESS]
+    CustomerProfile:
+      type: string
+      enum: [STANDARD, VIP, STANDARD_BUSINESS, PYME]
+    PersonalDataRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        documentType:
+          type: string
+        documentNumber:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+    BusinessDataRequest:
+      type: object
+      properties:
+        businessName:
+          type: string
+        tradeName:
+          type: string
+        registrationNumber:
+          type: string
+        businessType:
+          type: string
+        incorporationDate:
+          type: string
+          format: date
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+    CustomerRequest:
+      type: object
+      properties:
+        customerType:
+          $ref: '#/components/schemas/CustomerType'
+        customerProfile:
+          $ref: '#/components/schemas/CustomerProfile'
+        personalData:
+          $ref: '#/components/schemas/PersonalDataRequest'
+        businessData:
+          $ref: '#/components/schemas/BusinessDataRequest'
+    PersonalDataResponse:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        documentType:
+          type: string
+        documentNumber:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+    BusinessDataResponse:
+      type: object
+      properties:
+        businessName:
+          type: string
+        tradeName:
+          type: string
+        registrationNumber:
+          type: string
+        businessType:
+          type: string
+        incorporationDate:
+          type: string
+          format: date
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        authorizedSigners:
+          type: array
+          items:
+            type: string
+    CustomerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        customerType:
+          $ref: '#/components/schemas/CustomerType'
+        customerProfile:
+          $ref: '#/components/schemas/CustomerProfile'
+        personalData:
+          $ref: '#/components/schemas/PersonalDataResponse'
+        businessData:
+          $ref: '#/components/schemas/BusinessDataResponse'
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time

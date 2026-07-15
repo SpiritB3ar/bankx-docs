@@ -1,0 +1,102 @@
+<mxfile host="app.diagrams.net" modified="2026-07-14T15:22:00.000Z" agent="opencode" version="21.0.0" type="device">
+  <diagram id="fraud-detection" name="Fraud Detection">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="participant_kafka" value="Kafka" style="shape=triangle;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="200" y="60" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="participant_fraud" value="Fraud Service" style="shape=participant;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="60" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="participant_gemini" value="Gemini AI" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="70" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="participant_alert_topic" value="Kafka (fraud-alerts)" style="shape=triangle;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="60" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="db_fraud" value="MongoDB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="750" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline_kafka" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="120" as="sourcePoint" />
+            <mxPoint x="240" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline_fraud" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#82b366;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="120" as="sourcePoint" />
+            <mxPoint x="570" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline_gemini" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#9673a6;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="940" y="120" as="sourcePoint" />
+            <mxPoint x="940" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline_alert_topic" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;strokeWidth=2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1250" y="120" as="sourcePoint" />
+            <mxPoint x="1250" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg1" value="1. Consume transaction-events" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=12;strokeColor=#000000;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="200" as="sourcePoint" />
+            <mxPoint x="570" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="activation_fraud_1" value="" style="shape=flexArrow;endArrow=classic;html=1;strokeColor=#82b366;fillColor=#d5e8d4;startSize=0;endSize=0;width=10;startWidth=10;" vertex="1" parent="1">
+          <mxGeometry x="565" y="200" width="10" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="msg2" value="2. Check existing alert" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=12;strokeColor=#000000;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="220" as="sourcePoint" />
+            <mxPoint x="570" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" value="3. Check sufficient data" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;fontSize=12;strokeColor=#000000;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="260" as="sourcePoint" />
+            <mxPoint x="570" y="260" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="650" y="260" />
+              <mxPoint x="650" y="300" />
+              <mxPoint x="570" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" value="4. Analyze transaction" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=12;strokeColor=#000000;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="340" as="sourcePoint" />
+            <mxPoint x="940" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="activation_gemini_1" value="" style="shape=flexArrow;endArrow=classic;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;startSize=0;endSize=0;width=10;startWidth=10;" vertex="1" parent="1">
+          <mxGeometry x="935" y="340" width="10" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="msg5" value="5. Return analysis" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=12;strokeColor=#000000;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="940" y="420" as="sourcePoint" />
+            <mxPoint x="570" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" value="6. Save fraud alert" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=12;strokeColor=#000000;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="460" as="sourcePoint" />
+            <mxPoint x="570" y="780" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" value="7. Publish fraud-alerts" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=12;strokeColor=#000000;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="490" as="sourcePoint" />
+            <mxPoint x="1250" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,239 @@
+openapi: 3.0.3
+info:
+  title: Account Service API
+  description: Account Management Microservice for the Banking System.
+  version: 1.0.0
+  contact:
+    name: Banking System Team
+
+servers:
+  - url: http://localhost:8082
+
+tags:
+  - name: Accounts
+    description: Account Management operations
+
+paths:
+  /api/v1/accounts:
+    post:
+      tags: [Accounts]
+      summary: Create a new account
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+      responses:
+        '200':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+    get:
+      tags: [Accounts]
+      summary: Find all accounts
+      operationId: findAllAccounts
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountResponse'
+
+  /api/v1/accounts/{id}:
+    get:
+      tags: [Accounts]
+      summary: Find account by ID
+      operationId: findAccountById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+    put:
+      tags: [Accounts]
+      summary: Update account
+      operationId: updateAccount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountRequest'
+      responses:
+        '200':
+          description: Account updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+    delete:
+      tags: [Accounts]
+      summary: Delete account
+      operationId: deleteAccount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account deleted
+
+  /api/v1/accounts/customer/{customerId}:
+    get:
+      tags: [Accounts]
+      summary: Find accounts by customer ID
+      operationId: findAccountsByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountResponse'
+
+  /api/v1/accounts/type/{accountType}:
+    get:
+      tags: [Accounts]
+      summary: Find accounts by type
+      operationId: findAccountsByType
+      parameters:
+        - name: accountType
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AccountType'
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountResponse'
+
+  /api/v1/accounts/{id}/balance:
+    get:
+      tags: [Accounts]
+      summary: Get account balance
+      operationId: getBalance
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Balance retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceResponse'
+
+components:
+  schemas:
+    AccountType:
+      type: string
+      enum: [SAVINGS, CHECKING, FIXED_TERM]
+    AccountStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE, BLOCKED]
+    AccountHolderType:
+      type: string
+      enum: [PRIMARY, SECONDARY, AUTHORIZED_SIGNER]
+    AccountHolderRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+        holderType:
+          $ref: '#/components/schemas/AccountHolderType'
+    AccountRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+        currency:
+          type: string
+        initialBalance:
+          type: number
+          format: decimal
+        holders:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountHolderRequest'
+    BalanceResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+        balance:
+          type: number
+          format: decimal
+        currency:
+          type: string
+        availableBalance:
+          type: number
+          format: decimal
+    AccountResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        accountNumber:
+          type: string
+        accountType:
+          $ref: '#/components/schemas/AccountType'
+        balance:
+          type: number
+          format: decimal
+        currency:
+          type: string
+        status:
+          $ref: '#/components/schemas/AccountStatus'
+        holders:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountHolderRequest'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time

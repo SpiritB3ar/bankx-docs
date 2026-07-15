@@ -1,0 +1,105 @@
+{
+  "info": {
+    "name": "Fraud Detection Service",
+    "description": "Microservice for analyzing transactions for fraudulent activity and managing fraud alerts.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8085"
+    }
+  ],
+  "item": [
+    {
+      "name": "Analyze Transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "transactionId": "60f1a2b3c4d5e6f7a8b9c0d3",
+            "accountId": "60f1a2b3c4d5e6f7a8b9c0d1",
+            "amount": 5000.00,
+            "transactionType": "WITHDRAWAL",
+            "location": "Lima, Peru",
+            "deviceFingerprint": "abc123def456",
+            "ipAddress": "192.168.1.100"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/fraud/analyze",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "fraud", "analyze"]
+        }
+      }
+    },
+    {
+      "name": "Find All Alerts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/fraud/alerts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "fraud", "alerts"]
+        }
+      }
+    },
+    {
+      "name": "Find Alert by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/fraud/alerts/{{alertId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "fraud", "alerts", "{{alertId}}"]
+        }
+      }
+    },
+    {
+      "name": "Update Alert",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "status": "RESOLVED",
+            "notes": "Verified with customer - legitimate transaction",
+            "resolvedBy": "admin_user"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/fraud/alerts/{{alertId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "fraud", "alerts", "{{alertId}}"]
+        }
+      }
+    },
+    {
+      "name": "Delete Alert",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/fraud/alerts/{{alertId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "fraud", "alerts", "{{alertId}}"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+openapi: 3.0.3
+info:
+  title: Yanki Service API
+  description: Yanki Mobile Wallet Microservice for the Banking System.
+  version: 1.0.0
+  contact:
+    name: Banking System Team
+
+servers:
+  - url: http://localhost:8087
+
+tags:
+  - name: Yanki Wallets
+    description: Yanki Mobile Wallet operations
+
+paths:
+  /api/v1/yanki/wallets:
+    post:
+      tags: [Yanki Wallets]
+      summary: Register a new wallet
+      operationId: registerWallet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterWalletRequest'
+      responses:
+        '200':
+          description: Wallet registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+    get:
+      tags: [Yanki Wallets]
+      summary: Find all wallets
+      operationId: findAll
+      responses:
+        '200':
+          description: List of wallets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletResponse'
+
+  /api/v1/yanki/wallets/{id}:
+    get:
+      tags: [Yanki Wallets]
+      summary: Find wallet by ID
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Wallet found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+    put:
+      tags: [Yanki Wallets]
+      summary: Update wallet
+      operationId: updateWallet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterWalletRequest'
+      responses:
+        '200':
+          description: Wallet updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+    delete:
+      tags: [Yanki Wallets]
+      summary: Delete wallet
+      operationId: deleteWallet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Wallet deleted
+
+  /api/v1/yanki/wallets/phone/{phone}:
+    get:
+      tags: [Yanki Wallets]
+      summary: Find wallet by phone number
+      operationId: findByPhoneNumber
+      parameters:
+        - name: phone
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Wallet found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+
+  /api/v1/yanki/wallets/{id}/link-debit-card:
+    post:
+      tags: [Yanki Wallets]
+      summary: Link debit card to wallet
+      operationId: linkDebitCard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinkDebitCardRequest'
+      responses:
+        '200':
+          description: Debit card linked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+
+  /api/v1/yanki/wallets/{id}/send:
+    post:
+      tags: [Yanki Wallets]
+      summary: Send payment from wallet
+      operationId: sendPayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendPaymentRequest'
+      responses:
+        '200':
+          description: Payment sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YankiTransactionResponse'
+
+  /api/v1/yanki/wallets/{id}/receive:
+    post:
+      tags: [Yanki Wallets]
+      summary: Receive payment to wallet
+      operationId: receivePayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReceivePaymentRequest'
+      responses:
+        '200':
+          description: Payment received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YankiTransactionResponse'
+
+  /api/v1/yanki/wallets/{id}/balance:
+    get:
+      tags: [Yanki Wallets]
+      summary: Get wallet balance
+      operationId: getBalance
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Balance retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletResponse'
+
+components:
+  schemas:
+    DocumentType:
+      type: string
+      enum: [DNI, CEX, PASSPORT]
+    RegisterWalletRequest:
+      type: object
+      properties:
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentNumber:
+          type: string
+        phoneNumber:
+          type: string
+        imei:
+          type: string
+        email:
+          type: string
+    WalletResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        documentNumber:
+          type: string
+        phoneNumber:
+          type: string
+        imei:
+          type: string
+        email:
+          type: string
+        balance:
+          type: number
+          format: decimal
+        linkedDebitCardId:
+          type: string
+        linkedAccountId:
+          type: string
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    LinkDebitCardRequest:
+      type: object
+      properties:
+        debitCardId:
+          type: string
+    SendPaymentRequest:
+      type: object
+      properties:
+        destinationPhoneNumber:
+          type: string
+        amount:
+          type: number
+          format: decimal
+        description:
+          type: string
+    ReceivePaymentRequest:
+      type: object
+      properties:
+        sourcePhoneNumber:
+          type: string
+        amount:
+          type: number
+          format: decimal
+        description:
+          type: string
+    YankiTransactionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        transactionType:
+          type: string
+        sourceWalletId:
+          type: string
+        destinationWalletId:
+          type: string
+        amount:
+          type: number
+          format: decimal
+        description:
+          type: string
+        status:
+          type: string
+        transactionDate:
+          type: string
+          format: date-time

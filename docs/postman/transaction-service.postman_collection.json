@@ -1,0 +1,105 @@
+{
+  "info": {
+    "name": "Transaction Service",
+    "description": "Microservice for managing bank transactions: deposits, withdrawals, transfers between accounts, and transaction history.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8084"
+    }
+  ],
+  "item": [
+    {
+      "name": "Create Transaction",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "transactionType": "DEPOSIT",
+            "accountId": "60f1a2b3c4d5e6f7a8b9c0d1",
+            "amount": 250.00,
+            "description": "Cash deposit at branch",
+            "currency": "PEN"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"]
+        }
+      }
+    },
+    {
+      "name": "Find All Transactions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions"]
+        }
+      }
+    },
+    {
+      "name": "Find Transaction by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/{{transactionId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "{{transactionId}}"]
+        }
+      }
+    },
+    {
+      "name": "Find Transactions by Account",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/account/{{accountId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "account", "{{accountId}}"]
+        }
+      }
+    },
+    {
+      "name": "Transfer Between Accounts",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": {
+            "sourceAccountId": "60f1a2b3c4d5e6f7a8b9c0d1",
+            "destinationAccountId": "60f1a2b3c4d5e6f7a8b9c0d2",
+            "amount": 300.00,
+            "description": "Transfer to savings account",
+            "currency": "PEN"
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/transactions/transfer",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "transactions", "transfer"]
+        }
+      }
+    }
+  ]
+}

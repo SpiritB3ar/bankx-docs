@@ -1,0 +1,429 @@
+openapi: 3.0.3
+info:
+  title: Credit Service API
+  description: Credit Products Management Microservice for the Banking System.
+  version: 1.0.0
+  contact:
+    name: Banking System Team
+
+servers:
+  - url: http://localhost:8083
+
+tags:
+  - name: Credits
+    description: Credit Products Management operations
+  - name: Debit Cards
+    description: Debit Card Management operations
+
+paths:
+  /api/v1/credits:
+    post:
+      tags: [Credits]
+      summary: Create a new credit product
+      operationId: createCredit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRequest'
+      responses:
+        '200':
+          description: Credit created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditResponse'
+    get:
+      tags: [Credits]
+      summary: Find all credits
+      operationId: findAllCredits
+      responses:
+        '200':
+          description: List of credits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreditResponse'
+
+  /api/v1/credits/{id}:
+    get:
+      tags: [Credits]
+      summary: Find credit by ID
+      operationId: findCreditById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Credit found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditResponse'
+    put:
+      tags: [Credits]
+      summary: Update credit
+      operationId: updateCredit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRequest'
+      responses:
+        '200':
+          description: Credit updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditResponse'
+    delete:
+      tags: [Credits]
+      summary: Delete credit
+      operationId: deleteCredit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Credit deleted
+
+  /api/v1/credits/{id}/charge:
+    post:
+      tags: [Credits]
+      summary: Charge credit
+      operationId: chargeCredit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditChargeRequest'
+      responses:
+        '200':
+          description: Charge processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditResponse'
+
+  /api/v1/credits/{id}/payment:
+    post:
+      tags: [Credits]
+      summary: Make credit payment
+      operationId: makePayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditPaymentRequest'
+      responses:
+        '200':
+          description: Payment processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditResponse'
+
+  /api/v1/credits/{id}/third-party-payment:
+    post:
+      tags: [Credits]
+      summary: Third party credit payment
+      operationId: thirdPartyPayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThirdPartyPaymentRequest'
+      responses:
+        '200':
+          description: Third party payment processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditResponse'
+
+  /api/v1/debit-cards:
+    post:
+      tags: [Debit Cards]
+      summary: Create debit card
+      operationId: createDebitCard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitCardRequest'
+      responses:
+        '200':
+          description: Debit card created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitCardResponse'
+    get:
+      tags: [Debit Cards]
+      summary: Find all debit cards
+      operationId: findAllDebitCards
+      responses:
+        '200':
+          description: List of debit cards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DebitCardResponse'
+
+  /api/v1/debit-cards/{id}:
+    get:
+      tags: [Debit Cards]
+      summary: Find debit card by ID
+      operationId: findDebitCardById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Debit card found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitCardResponse'
+    put:
+      tags: [Debit Cards]
+      summary: Update debit card
+      operationId: updateDebitCard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitCardRequest'
+      responses:
+        '200':
+          description: Debit card updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitCardResponse'
+    delete:
+      tags: [Debit Cards]
+      summary: Delete debit card
+      operationId: deleteDebitCard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Debit card deleted
+
+  /api/v1/debit-cards/{id}/payment:
+    post:
+      tags: [Debit Cards]
+      summary: Make debit card payment
+      operationId: makeDebitCardPayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DebitCardPaymentRequest'
+      responses:
+        '200':
+          description: Payment processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebitCardResponse'
+
+components:
+  schemas:
+    CreditType:
+      type: string
+      enum: [PERSONAL, BUSINESS, CREDIT_CARD]
+    CreditStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE, CLOSED, DEFAULTED]
+    CreditLimitRequest:
+      type: object
+      properties:
+        approved:
+          type: number
+          format: decimal
+        used:
+          type: number
+          format: decimal
+        currency:
+          type: string
+    PaymentTermRequest:
+      type: object
+      properties:
+        termMonths:
+          type: integer
+        annualInterestRate:
+          type: number
+          format: decimal
+        monthlyPayment:
+          type: number
+          format: decimal
+    CreditRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+        creditType:
+          $ref: '#/components/schemas/CreditType'
+        creditLimit:
+          $ref: '#/components/schemas/CreditLimitRequest'
+        paymentTerm:
+          $ref: '#/components/schemas/PaymentTermRequest'
+    CreditResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        creditType:
+          $ref: '#/components/schemas/CreditType'
+        creditLimit:
+          $ref: '#/components/schemas/CreditLimitRequest'
+        paymentTerm:
+          $ref: '#/components/schemas/PaymentTermRequest'
+        status:
+          $ref: '#/components/schemas/CreditStatus'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CreditChargeRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+        description:
+          type: string
+        merchantName:
+          type: string
+    CreditPaymentRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+        paymentMethod:
+          type: string
+    ThirdPartyPaymentRequest:
+      type: object
+      properties:
+        payerDocumentNumber:
+          type: string
+        amount:
+          type: number
+          format: decimal
+        paymentMethod:
+          type: string
+    DebitCardStatus:
+      type: string
+      enum: [ACTIVE, INACTIVE, BLOCKED]
+    DebitCardRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+        accountId:
+          type: string
+        cardNumber:
+          type: string
+        expirationDate:
+          type: string
+          format: date
+    DebitCardPaymentRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: decimal
+        merchantName:
+          type: string
+        description:
+          type: string
+    DebitCardResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        accountId:
+          type: string
+        cardNumber:
+          type: string
+        expirationDate:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/DebitCardStatus'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time

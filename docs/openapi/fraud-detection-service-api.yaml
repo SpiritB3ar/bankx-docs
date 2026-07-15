@@ -1,0 +1,310 @@
+openapi: 3.0.3
+info:
+  title: Fraud Detection Service API
+  description: Fraud Detection Microservice for the Banking System.
+  version: 1.0.0
+  contact:
+    name: Banking System Team
+
+servers:
+  - url: http://localhost:8085
+
+tags:
+  - name: Fraud Detection
+    description: Fraud Detection operations
+  - name: Fraud Alerts
+    description: Fraud Alert Management
+  - name: Reports
+    description: Fraud Reports
+
+paths:
+  /api/v1/fraud/analyze/{transactionId}:
+    post:
+      tags: [Fraud Detection]
+      summary: Analyze transaction for fraud
+      operationId: analyzeTransaction
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Analysis completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudAlertResponse'
+
+  /api/v1/fraud:
+    get:
+      tags: [Fraud Alerts]
+      summary: Find all fraud alerts
+      operationId: findAllFraudAlerts
+      responses:
+        '200':
+          description: List of fraud alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudAlertResponse'
+
+  /api/v1/fraud/{id}:
+    get:
+      tags: [Fraud Alerts]
+      summary: Find fraud alert by ID
+      operationId: findFraudAlertById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fraud alert found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudAlertResponse'
+    put:
+      tags: [Fraud Alerts]
+      summary: Update fraud alert
+      operationId: updateFraudAlert
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FraudAlertUpdateRequest'
+      responses:
+        '200':
+          description: Fraud alert updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudAlertResponse'
+    delete:
+      tags: [Fraud Alerts]
+      summary: Delete fraud alert
+      operationId: deleteFraudAlert
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fraud alert deleted
+
+  /api/v1/fraud/{id}/resolve:
+    put:
+      tags: [Fraud Alerts]
+      summary: Resolve fraud alert
+      operationId: resolveAlert
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [CONFIRMED_FRAUD, FALSE_POSITIVE]
+        - name: comments
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fraud alert resolved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FraudAlertResponse'
+
+  /api/v1/fraud/customer/{customerId}:
+    get:
+      tags: [Fraud Alerts]
+      summary: Find fraud alerts by customer ID
+      operationId: findByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of fraud alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudAlertResponse'
+
+  /api/v1/fraud/status/{status}:
+    get:
+      tags: [Fraud Alerts]
+      summary: Find fraud alerts by status
+      operationId: findByStatus
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FraudAlertStatus'
+      responses:
+        '200':
+          description: List of fraud alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudAlertResponse'
+
+  /api/v1/fraud/risk-level/{riskLevel}:
+    get:
+      tags: [Fraud Alerts]
+      summary: Find fraud alerts by risk level
+      operationId: findByRiskLevel
+      parameters:
+        - name: riskLevel
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/RiskLevel'
+      responses:
+        '200':
+          description: List of fraud alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudAlertResponse'
+
+  /api/v1/fraud/reports/date-range:
+    get:
+      tags: [Reports]
+      summary: Generate fraud report by date range
+      operationId: generateReportByDateRange
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Report generated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudAlertResponse'
+
+  /api/v1/fraud/reports/customer/{customerId}/date-range:
+    get:
+      tags: [Reports]
+      summary: Generate fraud report by customer and date range
+      operationId: generateReportByCustomerIdAndDateRange
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Report generated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudAlertResponse'
+
+components:
+  schemas:
+    RiskLevel:
+      type: string
+      enum: [LOW, MEDIUM, HIGH, CRITICAL]
+    FraudAlertStatus:
+      type: string
+      enum: [PENDING, UNDER_REVIEW, CONFIRMED_FRAUD, FALSE_POSITIVE, RESOLVED, ESCALATED]
+    FraudAlertResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        transactionId:
+          type: string
+        customerId:
+          type: string
+        accountId:
+          type: string
+        riskScore:
+          type: integer
+        riskLevel:
+          $ref: '#/components/schemas/RiskLevel'
+        aiAnalysis:
+          type: string
+        status:
+          $ref: '#/components/schemas/FraudAlertStatus'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        analystComments:
+          type: string
+        transactionAmount:
+          type: number
+          format: decimal
+        transactionType:
+          type: string
+    FraudAlertUpdateRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/FraudAlertStatus'
+        comments:
+          type: string
