@@ -362,6 +362,35 @@ export DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:latest
 
 ---
 
+## Issue 10: Kafka Connection Timeout
+
+### Problem
+Kafka broker unreachable when using full DNS name.
+
+### Symptoms
+```
+Connection to node -1 (kafka.kafka.svc.cluster.local/10.0.200.240:9092) could not be established
+```
+
+### Solution
+Use ExternalName service instead of full DNS:
+
+```yaml
+# WRONG
+KAFKA_BOOTSTRAP_SERVERS: "kafka.kafka.svc.cluster.local:9092"
+
+# CORRECT
+KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+```
+
+The ExternalName service in `bankx` namespace resolves `kafka` to `kafka.kafka.svc.cluster.local`.
+
+### Result
+- Kafka connection succeeds
+- Application starts normally
+
+---
+
 ## Quick Reference: Deployment Checklist
 
 For each microservice, ensure:
