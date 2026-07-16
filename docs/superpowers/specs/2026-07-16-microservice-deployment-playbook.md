@@ -435,6 +435,7 @@ jobs:
           envsubst < k8s/deployment.yaml | kubectl apply -f -
           envsubst < k8s/service.yaml | kubectl apply -f -
           
+          kubectl rollout restart deployment/$SERVICE_NAME -n $K8S_NAMESPACE
           kubectl rollout status deployment/$SERVICE_NAME -n $K8S_NAMESPACE --timeout=300s
 ```
 
