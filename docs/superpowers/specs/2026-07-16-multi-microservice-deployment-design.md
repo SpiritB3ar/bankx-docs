@@ -256,6 +256,50 @@ After account-service is successfully deployed:
 
 ---
 
+## OpenAPI Spec Fix for Standalone Repos
+
+**Issue:** When migrating from monorepo to standalone repos, the OpenAPI spec path in `pom.xml` breaks.
+
+**Original path (monorepo):**
+```xml
+<inputSpec>${project.basedir}/../docs/openapi/account-service-api.yaml</inputSpec>
+```
+
+**Fixed path (standalone repo):**
+```xml
+<inputSpec>${project.basedir}/docs/openapi/account-service-api.yaml</inputSpec>
+```
+
+**Steps to fix for each microservice:**
+
+1. Copy OpenAPI spec from monorepo:
+```bash
+mkdir -p docs/openapi
+cp ../docs/openapi/<service-name>-api.yaml docs/openapi/
+```
+
+2. Update `pom.xml`:
+```xml
+<inputSpec>${project.basedir}/docs/openapi/<service-name>-api.yaml</inputSpec>
+```
+
+3. Commit without `[skip ci]`:
+```bash
+git add docs/openapi/ pom.xml
+git commit -m "fix: add OpenAPI spec and fix inputSpec path for standalone repo"
+git push origin main
+```
+
+**Affected services:**
+- [x] account-service (fixed)
+- [ ] customer-service
+- [ ] credit-service
+- [ ] fraud-detection-service
+- [ ] auth-service
+- [ ] yanki-service
+
+---
+
 ## Appendix: Service Configuration
 
 ### account-service
