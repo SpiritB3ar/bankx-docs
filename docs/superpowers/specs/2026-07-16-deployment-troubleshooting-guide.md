@@ -365,29 +365,56 @@ export DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:latest
 ## Issue 10: Kafka Connection Timeout
 
 ### Problem
-Kafka broker unreachable when using full DNS name.
+Kafka broker unreachable when using ExternalName service across namespaces.
 
 ### Symptoms
 ```
-Connection to node -1 (kafka.kafka.svc.cluster.local/10.0.200.240:9092) could not be established
+Connection to node -1 (kafka/10.0.200.240:9092) could not be established
 ```
 
 ### Solution
-Use ExternalName service instead of full DNS:
+Deploy Kafka directly in the same namespace as the services:
 
 ```yaml
-# WRONG
-KAFKA_BOOTSTRAP_SERVERS: "kafka.kafka.svc.cluster.local:9092"
-
-# CORRECT
-KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+# kafka-bankx.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+  namespace: bankx  # Same namespace as services
 ```
 
-The ExternalName service in `bankx` namespace resolves `kafka` to `kafka.kafka.svc.cluster.local`.
+### Result
+- DNS resolution works correctly
+- Services connect to Kafka directly
+
+---
+
+## Issue 11: Redis Not Found
+
+### Problem
+Redis not deployed in the cluster.
+
+### Symptoms
+```
+Failed to resolve 'redis' [A(1)]
+```
+
+### Solution
+Deploy Redis in the same namespace:
+
+```yaml
+# redis-bankx.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: bankx
+```
 
 ### Result
-- Kafka connection succeeds
-- Application starts normally
+- Redis available at `redis:6379`
+- Caching enabled
 
 ---
 

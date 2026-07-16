@@ -551,8 +551,8 @@ gh run list --repo SpiritB3ar/<service-name> --limit 3
 ## Notes
 
 - **Namespace:** All services deploy to `bankx`
-- **Kafka:** Available at `kafka:9092` (ExternalName service in bankx namespace)
+- **Kafka:** Available at `kafka:9092` (same namespace)
+- **Redis:** Available at `redis:6379` (same namespace, password from secret)
 - **MongoDB:** Use `cosmos-mongo-secret` for connection string
-- **Redis:** Available at `redis:6379` (if deployed)
 - **Image Tag:** Always use `latest` for simplicity
 - **Resources:** Minimal (100m CPU, 128Mi RAM) for bootcamp
