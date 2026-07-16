@@ -330,6 +330,38 @@ metadata:
 
 ---
 
+## Issue 9: Wrong Image Name in Deployment
+
+### Problem
+Deployment uses incorrect image name (missing ACR prefix).
+
+### Symptoms
+```
+Warning  Failed  failed to pull image "docker.io/library/account-service:latest": 
+repository does not exist or may require authorization
+```
+
+### Solution
+Ensure deployment.yaml uses the `DOCKER_IMAGE` variable:
+
+```yaml
+containers:
+  - name: ${SERVICE_NAME}
+    image: ${DOCKER_IMAGE}  # Must be acrbankx.azurecr.io/service-name:latest
+```
+
+CI/CD pipeline sets:
+```yaml
+export DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:latest
+# Result: acrbankx.azurecr.io/account-service:latest
+```
+
+### Result
+- AKS pulls from correct ACR registry
+- ImagePullBackOff resolved
+
+---
+
 ## Quick Reference: Deployment Checklist
 
 For each microservice, ensure:
