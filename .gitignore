@@ -1,6 +1,19 @@
 # Ignorar planes/specs internos de superpowers
 docs/superpowers/
 
+# Scripts y archivos de infra/setup local (no son documentacion del proyecto)
+KAFKA-SETUP.md
+MONGO-SETUP.md
+TODO.md
+docker-compose.yml
+podman-compose.yml
+mongo-compose.yml
+kafka-*.ps1
+mongo-*.ps1
+setup-repos.ps1
+start-infra.ps1
+docs/GIT-REPOSITORIES-SETUP.md
+
 # Archivos de entorno/temporales
 .env
 *.log
