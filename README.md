@@ -1,221 +1,50 @@
-# Banking System - Microservices Project
+# BankX — Documentación y Pruebas (Postman / Diagrams / OpenAPI)
 
-## Overview
+Repositorio de **entregables de documentación** del sistema bancario BankX (Proyectos I, II y III).
+El código fuente de cada microservicio vive en sus propios repositorios; aquí se centraliza:
 
-A complete banking system built with microservices architecture, following hexagonal architecture (Ports & Adapters) pattern, reactive programming with Spring WebFlux, and AI-powered fraud detection.
+- 📮 **Colecciones Postman** validadas end-to-end contra APIM + JWT (`docs/postman/`)
+- 📐 **Diagramas UML / draw.io** (arquitectura, secuencia, despliegue, Kafka) (`docs/diagrams/`, `docs/uml/`)
+- 📝 **Contratos OpenAPI** de cada microservicio (`docs/openapi/`)
+- 📄 **Planes y especificaciones** de las 3 fases (`docs/superpowers/`)
+- 🧪 **Plan de pruebas** (`docs/TEST-PLAN.md`)
 
-## Project Structure
+## Arquitectura
 
-```
-banksystem/
-├── config-server/                    # Configuration Server
-├── customer-service/                 # Customer Management
-├── account-service/                  # Account Management
-├── credit-service/                   # Credit Products Management
-├── transaction-service/              # Transaction Management
-├── fraud-detection-service/          # Fraud Detection with AI
-├── docs/                             # Documentation
-│   ├── uml/                          # UML Diagrams (draw.io)
-│   └── openapi/                      # OpenAPI Contracts
-├── start-infra.ps1                   # Start all infrastructure
-├── kafka-setup.ps1                   # Kafka setup script
-├── kafka-cleanup.ps1                 # Kafka cleanup script
-├── kafka-test.ps1                    # Kafka test script
-├── mongo-setup.ps1                   # MongoDB setup script
-├── mongo-cleanup.ps1                 # MongoDB cleanup script
-├── setup-repos.ps1                   # Git repository setup script
-├── docker-compose.yml                # Docker/Podman Compose (Kafka)
-├── podman-compose.yml                # Podman Compose (Kafka with topics)
-├── mongo-compose.yml                 # Podman Compose (MongoDB)
-├── KAFKA-SETUP.md                    # Kafka documentation
-├── MONGO-SETUP.md                    # MongoDB documentation
-└── README.md                         # This file
-```
+- 7 microservicios: `customer`, `account`, `credit`, `transaction`, `auth`, `yanki`, `fraud-detection`
+- Comunicación **inter-microservicio SOLO por Kafka** (Event Hubs, SASL_SSL :9093)
+- Exposición vía **APIM** (`https://apim-bankx.azure-api.net`) + **JWT** (auth-service)
+- Base de datos **MongoDB** por microservicio (database-per-service) + **Redis** para catálogos
 
-## Microservices
+## Cómo probar las APIs
 
-| Service | Port | Database | Description |
-|---------|------|----------|-------------|
-| **Config Server** | 8888 | N/A | Centralized configuration |
-| **Customer Service** | 8081 | customer_db | Customer management |
-| **Account Service** | 8082 | account_db | Bank accounts management |
-| **Credit Service** | 8083 | credit_db | Credit products management |
-| **Transaction Service** | 8084 | transaction_db | Transaction management |
-| **Fraud Detection** | 8085 | fraud_db | AI-powered fraud detection |
+1. Registrar usuario en `auth-service` → `POST /api/v1/auth/register`
+2. Login → `POST /api/v1/auth/login` → copiar `accessToken`
+3. Usar el token como `Bearer` en el resto de llamadas (variable `token` en las colecciones)
+4. Todas las colecciones usan `baseUrl = https://apim-bankx.azure-api.net`
 
-## Technology Stack
+> ⚠️ En PowerShell, enviar el body JSON desde un archivo (`--data-binary "@req.json"`),
+> nunca inline, para evitar corrupción de comillas.
 
-- **Java 17**
-- **Spring Boot 3.3.1**
-- **Spring WebFlux** (Reactive Programming)
-- **Spring Cloud Config** (Externalized Configuration)
-- **MongoDB** (Database per Service)
-- **Apache Kafka** (Event-Driven Architecture)
-- **Spring AI with Gemini AI** (Fraud Detection)
-- **MapStruct** (Object Mapping)
-- **Lombok** (Code Reduction)
-- **Springdoc OpenAPI** (API Documentation)
+## Índice de diagramas
 
-## Architecture
+| Diagrama | Archivo |
+|----------|---------|
+| Arquitectura general | `docs/uml/architecture-diagram.drawio` |
+| Arquitectura de despliegue | `docs/uml/deployment-architecture.drawio` |
+| Interacción de microservicios | `docs/uml/microservices-interaction.drawio` |
+| Arquitectura hexagonal | `docs/uml/hexagonal-architecture.drawio` |
+| Tópicos Kafka | `docs/uml/kafka-topics.drawio` |
+| Secuencia: auth JWT | `docs/diagrams/sequence-auth-jwt-flow.drawio` |
+| Secuencia: account | `docs/diagrams/sequence-account-operations.drawio` |
+| Secuencia: credit | `docs/diagrams/sequence-credit-operations.drawio` |
+| Secuencia: transaction | `docs/diagrams/sequence-transaction-operations.drawio` |
+| Secuencia: debt-check (Kafka) | `docs/diagrams/sequence-debt-check-kafka.drawio` |
+| Secuencia: fraud detection | `docs/diagrams/sequence-fraud-detection.drawio` |
+| Secuencia: third-party payment | `docs/diagrams/sequence-third-party-payment.drawio` |
+| Secuencia: Yanki wallet | `docs/diagrams/sequence-yanki-wallet.drawio` |
+| Secuencia: fraud (UML) | `docs/uml/fraud-detection-sequence.drawio` |
 
-### Hexagonal Architecture (Ports & Adapters)
+## Contratos OpenAPI
 
-Each microservice follows hexagonal architecture:
-
-- **Domain Layer**: Business logic, entities, use cases
-- **Application Layer**: Application services
-- **Adapter Inbound**: REST controllers, Kafka listeners
-- **Adapter Outbound**: MongoDB repositories, Kafka producers
-
-### Key Features
-
-1. **Reactive Programming**: Non-blocking I/O with WebFlux
-2. **Database per Service**: Each service has its own MongoDB database
-3. **Event-Driven**: Kafka for inter-service communication
-4. **AI-Powered Fraud Detection**: Gemini AI for transaction analysis
-5. **Externalized Configuration**: Spring Cloud Config Server
-
-## Prerequisites
-
-- Java 17 or higher
-- Maven 3.8+
-- Podman (or Docker)
-- Git
-
-## Getting Started
-
-### Prerequisites
-
-- Java 17 or higher
-- Maven 3.8+
-- Podman (or Docker)
-- Git
-
-### 1. Start Infrastructure (Podman)
-
-```powershell
-# Start all infrastructure (MongoDB + Kafka)
-.\start-infra.ps1
-
-# Or start individually:
-.\mongo-setup.ps1    # Start MongoDB
-.\kafka-setup.ps1    # Start Kafka
-```
-
-### 2. Start Config Server
-
-```powershell
-cd config-server
-mvn spring-boot:run
-```
-
-### 3. Start Microservices
-
-```powershell
-# Start each service in a separate terminal
-cd customer-service && mvn spring-boot:run
-cd account-service && mvn spring-boot:run
-cd credit-service && mvn spring-boot:run
-cd transaction-service && mvn spring-boot:run
-cd fraud-detection-service && mvn spring-boot:run
-```
-
-### 4. Access Services
-
-| Service | URL |
-|---------|-----|
-| **Config Server** | http://localhost:8888 |
-| **Customer Service** | http://localhost:8081/swagger-ui.html |
-| **Account Service** | http://localhost:8082/swagger-ui.html |
-| **Credit Service** | http://localhost:8083/swagger-ui.html |
-| **Transaction Service** | http://localhost:8084/swagger-ui.html |
-| **Fraud Detection** | http://localhost:8085/swagger-ui.html |
-| **Mongo Express** | http://localhost:8081 (MongoDB UI) |
-| **Kafka UI** | http://localhost:8080 |
-
-### Infrastructure Services
-
-| Service | Port | URL |
-|---------|------|-----|
-| **MongoDB** | 27017 | mongodb://admin:admin123@localhost:27017 |
-| **Mongo Express** | 8081 | http://localhost:8081 |
-| **Kafka** | 9092 | localhost:9092 |
-| **Kafka UI** | 8080 | http://localhost:8080 |
-| **Zookeeper** | 2181 | localhost:2181
-
-## API Documentation
-
-OpenAPI contracts are available in `docs/openapi/` directory:
-
-- `customer-service-api.yaml`
-- `account-service-api.yaml`
-- `credit-service-api.yaml`
-- `transaction-service-api.yaml`
-- `fraud-detection-service-api.yaml`
-
-## UML Diagrams
-
-Architecture and sequence diagrams are available in `docs/uml/` directory:
-
-- `architecture-diagram.drawio` - System architecture
-- `hexagonal-architecture.drawio` - Hexagonal pattern
-- `fraud-detection-sequence.drawio` - Fraud detection flow
-
-## Git Repositories Setup
-
-Each microservice should have its own Git repository. Run the setup script:
-
-```powershell
-.\setup-repos.ps1 -GitHubUsername "YOUR_USERNAME"
-```
-
-Or follow the manual setup guide in `docs/GIT-REPOSITORIES-SETUP.md`.
-
-## Business Rules
-
-### Customer Types
-- **Personal**: Individual customers
-- **Business**: Corporate customers
-- **VIP**: Personal customers with premium benefits
-- **PYME**: Small business customers
-
-### Account Types
-- **Savings (Ahorro)**: No maintenance fee, limited transactions
-- **Checking (Corriente)**: Maintenance fee, unlimited transactions
-- **Fixed-term (Plazo Fijo)**: No maintenance fee, one transaction per month
-
-### Credit Types
-- **Personal**: One active credit per customer
-- **Business**: Multiple credits allowed
-- **Credit Card**: Revolving credit with minimum payment
-
-### Fraud Detection
-- **Risk Score 0-39**: Auto approve
-- **Risk Score 40-69**: Manual review required
-- **Risk Score 70-89**: Transaction blocked
-- **Risk Score 90-100**: Immediate block and alert
-
-## Development
-
-### Code Style
-
-- All class/method names in English
-- Classes and methods must be commented
-- Use Lombok for code reduction
-- Use MapStruct for object mapping
-- Follow hexagonal architecture
-
-### Testing
-
-```bash
-# Run tests for a service
-cd customer-service
-mvn test
-
-# Run tests with coverage
-mvn test jacoco:report
-```
-
-## License
-
-This project is for educational purposes.
+`account`, `auth`, `credit`, `customer`, `fraud-detection`, `transaction`, `yanki` → `docs/openapi/*.yaml`
