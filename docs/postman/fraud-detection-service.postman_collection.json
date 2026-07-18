@@ -1,4 +1,4 @@
-{
+﻿{
     "variable":  [
                      {
                          "key":  "baseUrl",
@@ -91,6 +91,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -117,6 +121,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -144,6 +152,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -172,6 +184,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -200,6 +216,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -228,6 +248,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -264,6 +288,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -291,6 +319,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
@@ -319,6 +351,10 @@
                                                     {
                                                         "key":  "Content-Type",
                                                         "value":  "application/json"
+                                                    },
+                                                    {
+                                                        "key":  "Authorization",
+                                                        "value":  "Bearer {{token}}"
                                                     }
                                                 ]
                                  },
