@@ -37,22 +37,25 @@ El código fuente de cada microservicio vive en sus propios repositorios; aquí 
 
 ## Índice de diagramas
 
-| Diagrama | Archivo |
-|----------|---------|
-| Arquitectura general (AKS/APIM) | `docs/uml/architecture-diagram.drawio` |
-| Arquitectura de despliegue (AKS) | `docs/uml/deployment-architecture.drawio` |
-| Interacción de microservicios | `docs/uml/microservices-interaction.drawio` |
-| Arquitectura hexagonal | `docs/uml/hexagonal-architecture.drawio` |
-| Tópicos Kafka (Event Hubs) | `docs/uml/kafka-topics.drawio` |
-| Secuencia: auth JWT | `docs/diagrams/sequence-auth-jwt-flow.drawio` |
-| Secuencia: account | `docs/diagrams/sequence-account-operations.drawio` |
-| Secuencia: credit | `docs/diagrams/sequence-credit-operations.drawio` |
-| Secuencia: transaction | `docs/diagrams/sequence-transaction-operations.drawio` |
-| Secuencia: debt-check (Kafka) | `docs/diagrams/sequence-debt-check-kafka.drawio` |
-| Secuencia: fraud detection | `docs/diagrams/sequence-fraud-detection.drawio` |
-| Secuencia: third-party payment | `docs/diagrams/sequence-third-party-payment.drawio` |
-| Secuencia: Yanki wallet | `docs/diagrams/sequence-yanki-wallet.drawio` |
-| Secuencia: fraud (UML) | `docs/uml/fraud-detection-sequence.drawio` |
+Los diagramas fuente son `.drawio` (editables en [draw.io](https://app.diagrams.net/)).
+Se incluyen también exportaciones **PNG** en `docs/diagrams-png/` para visualización rápida.
+
+| Diagrama | Fuente .drawio | PNG |
+|----------|---------------|-----|
+| Arquitectura general (AKS/APIM) | `docs/uml/architecture-diagram.drawio` | `docs/diagrams-png/architecture-diagram.png` |
+| Arquitectura de despliegue (AKS) | `docs/uml/deployment-architecture.drawio` | `docs/diagrams-png/deployment-architecture.png` |
+| Interacción de microservicios | `docs/uml/microservices-interaction.drawio` | `docs/diagrams-png/microservices-interaction.png` |
+| Arquitectura hexagonal | `docs/uml/hexagonal-architecture.drawio` | `docs/diagrams-png/hexagonal-architecture.png` |
+| Tópicos Kafka (Event Hubs) | `docs/uml/kafka-topics.drawio` | `docs/diagrams-png/kafka-topics.png` |
+| Secuencia: auth JWT | `docs/diagrams/sequence-auth-jwt-flow.drawio` | `docs/diagrams-png/sequence-auth-jwt-flow.png` |
+| Secuencia: account | `docs/diagrams/sequence-account-operations.drawio` | `docs/diagrams-png/sequence-account-operations.png` |
+| Secuencia: credit | `docs/diagrams/sequence-credit-operations.drawio` | `docs/diagrams-png/sequence-credit-operations.png` |
+| Secuencia: transaction | `docs/diagrams/sequence-transaction-operations.drawio` | `docs/diagrams-png/sequence-transaction-operations.png` |
+| Secuencia: debt-check (Kafka) | `docs/diagrams/sequence-debt-check-kafka.drawio` | `docs/diagrams-png/sequence-debt-check-kafka.png` |
+| Secuencia: fraud detection | `docs/diagrams/sequence-fraud-detection.drawio` | `docs/diagrams-png/sequence-fraud-detection.png` |
+| Secuencia: third-party payment | `docs/diagrams/sequence-third-party-payment.drawio` | `docs/diagrams-png/sequence-third-party-payment.png` |
+| Secuencia: Yanki wallet | `docs/diagrams/sequence-yanki-wallet.drawio` | `docs/diagrams-png/sequence-yanki-wallet.png` |
+| Secuencia: fraud (UML) | `docs/uml/fraud-detection-sequence.drawio` | `docs/diagrams-png/fraud-detection-sequence.png` |
 
 ## Contratos OpenAPI
 
