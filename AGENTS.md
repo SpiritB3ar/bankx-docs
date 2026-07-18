@@ -220,3 +220,79 @@ Artefactos y entregables.
 · Crear y mantener un repositorio en donde tengan los proyectos postman para las pruebas de sus APIs.
 
 · Cada microservicio deberá tener su propio repositorio, la entrega es individual
+
+---
+
+## Notas operativas (AKS / APIM / Kafka e2e)
+
+### ⚠️ CÓMO PROBAR LOS ENDPOINTS CON curl EN POWERSHELL (crítico)
+El body JSON SIEMPRE se debe enviar desde un ARCHIVO, nunca como variable inline.
+Si se hace `curl.exe ... --data-binary "$json"` con `$json` construido con comillas
+backtick, PowerShell corrompe las comillas de las claves y el servicio recibe algo como
+`{documentType:...}` (sin comillas en las claves) → Jackson lanza
+`JsonParseException: Unexpected character ('d'): was expecting double-quote to start field name`
+→ HTTP 400 "Failed to read HTTP message" (se confunde con un bug del servicio, pero no lo es).
+
+Forma correcta (usar siempre `--data-binary "@archivo.json"`):
+```powershell
+$body = @{ customerId=$cid; accountType="SAVINGS"; currency="PEN"; initialBalance=100 } | ConvertTo-Json
+$body | Out-File "$env:TEMP\req.json" -Encoding ascii
+curl.exe -s -w "`nHTTP:%{http_code}" -X POST "$url" `
+  -H "Authorization: Bearer $token" -H "Content-Type: application/json" `
+  --data-binary "@$env:TEMP\req.json"
+```
+También: para leer la respuesta JSON usar `curl.exe -s ...` y luego parsear el body aparte
+del status code; no usar `ConvertFrom-Json` sobre la salida que incluye `HTTP:201`.
+
+### Pasos para levantar/verificar
+1. Crear cliente (customer) → guardar `cid` en `$env:TEMP\cid.txt`.
+2. Login en auth-service → guardar JWT en `$env:TEMP\jwt.txt` (`Authorization: Bearer <jwt>`).
+3. Crear cuenta (account) → guardar `aid`.
+4. Crear crédito (credit) → guardar `crid`.
+5. Transacción depósito/transferencia (transaction).
+6. Analizar fraude (fraud, POST `/api/v1/fraud/analyze/{id}`).
+7. Billetera Yanki (yanki, POST `/api/v1/yanki/wallets`).
+
+### Valores de enums en el JSON (no inventar)
+- credit-service `creditType`: `PERSONAL` | `BUSINESS` | `CREDIT_CARD` (NO "PERSONAL_LOAN").
+- yanki `documentType`: `DNI` | `CEX` | `PASSPORT`.
+- transaction `transactionType`: DEPOSIT | WITHDRAWAL | TRANSFER | CREDIT_PAYMENT |
+  CREDIT_CHARGE | DEBIT_CARD_PURCHASE | CREDIT_CARD_PURCHASE | YANKI_TRANSFER | FEE | INTEREST.
+- account request usa `accountType` (no `productType`); campos: customerId, accountType,
+  currency, initialBalance, holders[].
+
+### Paths base por servicio (en APIM/gateway)
+- credit: `/api/v1/credits`, debit-cards: `/api/v1/debit-cards`
+- account: `/api/v1/accounts`
+- transaction: `/api/v1/transactions`
+- fraud: `/api/v1/fraud/analyze/{id}` (POST, no GET), `/api/v1/fraud/alerts`
+- yanki: `/api/v1/yanki/wallets`  (OJO: es `/yanki/wallets`, NO `/yanki-wallets`)
+  Subpaths Yanki:
+  o `POST /api/v1/yanki/wallets` (registro; body: documentType, documentNumber, phoneNumber, imei, email)
+  o `GET /api/v1/yanki/wallets/{id}` y `GET /api/v1/yanki/wallets/phone/{phoneNumber}`
+  o `POST /api/v1/yanki/wallets/{id}/send` (body: destinationPhoneNumber, amount)
+  o `POST /api/v1/yanki/wallets/{id}/receive` (body: sourcePhoneNumber, amount)
+  o `POST /api/v1/yanki/wallets/{id}/link-debit-card` (body: debitCardId)
+  o `GET /api/v1/yanki/wallets/{id}/balance`
+  Nota: envío/recibo de pagos es SOLO por número de celular (destinationPhoneNumber / sourcePhoneNumber), no por walletId.
+- customer: `/api/v1/customers`
+- auth: `/api/v1/auth/login`
+
+### Kafka (Event Hubs, SASL_SSL :9093)
+- Inter-microservicio SOLO por Kafka (no REST). Topics clave:
+  `debt-check-request`/`debt-check-response`, `credit-card-check-request`/`response`,
+  `transaction-events`, `transaction-completed`, `yanki-transfer`.
+- Consumers/producers usan `StringDeserializer`/`StringSerializer` y parsean el JSON manualmente
+  con Jackson (records DTO en `adapter/inbound/kafka/dto`).
+- Para ver el stacktrace real de un 400 "Failed to read HTTP message", elevar logging en
+  `application-prod.yml`: `org.springframework.web.reactive.result.method.annotation: DEBUG`,
+  `org.springframework.http.codec: DEBUG`.
+
+### JWT / APIM
+- auth login es público; el resto de APIs exige token (401 sin token, 200 con token válido).
+- El secreto canónico está en el configmap de auth-service (`JWT_SECRET`).
+
+### kubectl / port-forward
+- Para depurar un servicio sin pasar por APIM: `kubectl port-forward -n bankx <pod> <local>:<containerPort>`
+  y llamar a `http://localhost:<local>/...`. El puerto del container NO es 8080 en todos
+  (fraud=8085, yanki=8088, etc.); usar `kubectl get pod ... -o jsonpath='{.spec.containers[0].ports[0].containerPort}'`.
