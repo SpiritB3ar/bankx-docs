@@ -15,12 +15,22 @@
                          "type":  "string",
                          "value":  "ana.lopez"
                      },
-                     {
-                         "key":  "password",
-                         "type":  "string",
-                         "value":  "password123"
-                     }
-                 ],
+                      {
+                          "key":  "password",
+                          "type":  "string",
+                          "value":  "password123"
+                      },
+                      {
+                          "key":  "email",
+                          "type":  "string",
+                          "value":  "ana.lopez@bank.com"
+                      },
+                      {
+                          "key":  "customerId",
+                          "type":  "string",
+                          "value":  ""
+                      }
+                  ],
     "info":  {
                  "name":  "Auth Service",
                  "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -29,7 +39,7 @@
                  {
                      "request":  {
                                      "body":  {
-                                                  "raw":  "@{ \"username\": \"ana.lopez\", \"password\": \"password123\", \"email\": \"ana.lopez@bank.com\", \"customerId\": \"{{customerId}}\" }",
+                                                  "raw":  "{ \"username\": \"{{username}}\", \"password\": \"{{password}}\", \"email\": \"{{email}}\", \"customerId\": \"{{customerId}}\" }",
                                                   "options":  {
                                                                   "raw":  {
                                                                               "language":  "json"
@@ -65,7 +75,7 @@
                  {
                      "request":  {
                                      "body":  {
-                                                  "raw":  "@{ \"username\": \"{{username}}\", \"password\": \"{{password}}\" }",
+                                                  "raw":  "{ \"username\": \"{{username}}\", \"password\": \"{{password}}\" }",
                                                   "options":  {
                                                                   "raw":  {
                                                                               "language":  "json"
@@ -97,11 +107,11 @@
                      "event":  [
                                    {
                                        "script":  {
-                                                      "exec":  [
-                                                                   "var json = pm.response.json();",
-                                                                   "pm.collectionVariables.set(\u0027token\u0027, json.accessToken);",
-                                                                   "console.log(\u0027token set\u0027);"
-                                                               ]
+                                      "exec":  [
+                                                                    "var json = pm.response.json();",
+                                                                    "pm.environment.set(\u0027token\u0027, json.accessToken);",
+                                                                    "console.log(\u0027token set\u0027);"
+                                                                ]
                                                   },
                                        "listen":  "test"
                                    }
