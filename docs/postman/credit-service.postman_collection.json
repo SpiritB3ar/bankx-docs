@@ -108,7 +108,8 @@
                      "name":  "Create Credit (Credit Card)",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "451dd949e9334d918a89daa8"
                  },
                  {
                      "request":  {
@@ -147,7 +148,8 @@
                      "name":  "Create Credit (Personal)",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "8a5357088da04d42b4ef2fa3"
                  },
                  {
                      "request":  {
@@ -177,7 +179,8 @@
                      "name":  "Find All Credits",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "873da025d54444078329cfe9"
                  },
                  {
                      "request":  {
@@ -208,7 +211,8 @@
                      "name":  "Find Credit by ID",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "f5d0a67fb0ce426a84c5f6dc"
                  },
                  {
                      "request":  {
@@ -248,7 +252,8 @@
                      "name":  "Update Credit",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "9e3c66ffaacd4822b20910e3"
                  },
                  {
                      "request":  {
@@ -279,7 +284,8 @@
                      "name":  "Delete Credit",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "9dc22c41db7543f893e83c48"
                  },
                  {
                      "request":  {
@@ -320,7 +326,8 @@
                      "name":  "Charge Credit Card",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "e01d4805c0514023b0035345"
                  },
                  {
                      "request":  {
@@ -361,7 +368,8 @@
                      "name":  "Make Payment",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "eb86fc7f32464e4f90e285dc"
                  },
                  {
                      "request":  {
@@ -402,7 +410,8 @@
                      "name":  "Third-Party Payment",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "0d8ed893f53a487988477260"
                  },
                  {
                      "request":  {
@@ -434,7 +443,8 @@
                      "name":  "Find Credits by Customer",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "85e645c20aae4d0783855f0c"
                  }
              ],
     "auth":  {
@@ -446,5 +456,6 @@
                                 }
                             ],
                  "type":  "bearer"
-             }
+             },
+    "_postman_id":  "3f0b17121c5b4792841b5e78"
 }

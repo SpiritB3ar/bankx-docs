@@ -101,7 +101,8 @@
                      "name":  "Analyze Transaction (by ID)",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "012956939b23445682f43bfe"
                  },
                  {
                      "request":  {
@@ -131,7 +132,8 @@
                      "name":  "Find All Alerts",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "aeaf1af7b5b741379ebf3076"
                  },
                  {
                      "request":  {
@@ -162,7 +164,8 @@
                      "name":  "Find Alert by ID",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "421bd3f975724efaa31f8643"
                  },
                  {
                      "request":  {
@@ -194,7 +197,8 @@
                      "name":  "Find Alerts by Customer",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "3fcb9c699e034437a0e29bf2"
                  },
                  {
                      "request":  {
@@ -226,7 +230,8 @@
                      "name":  "Find Alerts by Status",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "f5df0c0e4de5425b8eb91340"
                  },
                  {
                      "request":  {
@@ -258,7 +263,8 @@
                      "name":  "Find Alerts by Risk Level",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "2d923dd108ec480483130d75"
                  },
                  {
                      "request":  {
@@ -298,7 +304,8 @@
                      "name":  "Update Alert",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "09592561e0694b96a3969815"
                  },
                  {
                      "request":  {
@@ -329,7 +336,8 @@
                      "name":  "Delete Alert",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "81a93cc5703e4757bd8f12b4"
                  },
                  {
                      "request":  {
@@ -361,7 +369,8 @@
                      "name":  "Report by Date Range",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "bb864870046149a4a793ceef"
                  }
              ],
     "auth":  {
@@ -373,5 +382,6 @@
                                 }
                             ],
                  "type":  "bearer"
-             }
+             },
+    "_postman_id":  "86b3353ee844449897b6345d"
 }

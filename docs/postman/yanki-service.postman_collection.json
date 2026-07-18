@@ -119,7 +119,8 @@
                      "name":  "Register Wallet",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "1360b85670a2472b87f0c09a"
                  },
                  {
                      "request":  {
@@ -150,7 +151,8 @@
                      "name":  "Get Wallet by ID",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "21993ea047f4427dbfca665c"
                  },
                  {
                      "request":  {
@@ -182,7 +184,8 @@
                      "name":  "Get Wallet by Phone",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "0d1bdf0c62274c3594b1c7f2"
                  },
                  {
                      "request":  {
@@ -223,7 +226,8 @@
                      "name":  "Send Payment",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "b3149c131db0443bb4a8d45b"
                  },
                  {
                      "request":  {
@@ -264,7 +268,8 @@
                      "name":  "Receive Payment",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "a40867ae5bab4a4795a2c69d"
                  },
                  {
                      "request":  {
@@ -305,7 +310,8 @@
                      "name":  "Link Debit Card",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "e9babf85ef634bf4b681430e"
                  },
                  {
                      "request":  {
@@ -337,7 +343,8 @@
                      "name":  "Get Balance",
                      "response":  [
 
-                                  ]
+                                  ],
+                     "_postman_id":  "8a76c42693bc4e84b4e60208"
                  }
              ],
     "auth":  {
@@ -349,5 +356,6 @@
                                 }
                             ],
                  "type":  "bearer"
-             }
+             },
+    "_postman_id":  "af5e775c9f684869b5944e2f"
 }
