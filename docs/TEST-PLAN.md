@@ -2,22 +2,21 @@
 
 ## Overview
 
-Test plan for all 10 microservices in the Banking System. Covers unit tests (JUnit 5 + Mockito) with JaCoCo coverage reports.
+Test plan for the 7 functional microservices in the Banking System. Covers unit tests (JUnit 5 + Mockito) with JaCoCo coverage reports.
+
+> Note: The system runs on AKS with Azure API Management (JWT), Azure Cosmos DB (MongoDB API) and Azure Event Hubs (Kafka). There is **no** Spring Cloud Gateway, Eureka or Config Server in production — `gateway-service`, `eureka-server` and `config-server` folders exist only as legacy/reference code and are not part of the deployed platform.
 
 ## Test Execution Order
 
-Services must be tested in dependency order:
+Services depend on Cosmos DB (MongoDB API) and Event Hubs (Kafka). Unit tests mock Kafka, Redis and Gemini:
 
-1. `config-server` (no dependencies)
-2. `eureka-server` (no dependencies)
-3. `auth-service` (depends on MongoDB)
-4. `customer-service` (depends on MongoDB, Redis)
-5. `account-service` (depends on MongoDB, Redis, Kafka)
-6. `credit-service` (depends on MongoDB, Redis, Kafka)
-7. `transaction-service` (depends on MongoDB, Kafka)
-8. `fraud-detection-service` (depends on MongoDB, Kafka, Gemini AI)
-9. `yanki-service` (depends on MongoDB, Kafka)
-10. `gateway-service` (depends on Eureka)
+1. `auth-service` (depends on Cosmos DB)
+2. `customer-service` (depends on Cosmos DB, Redis)
+3. `account-service` (depends on Cosmos DB, Redis, Kafka)
+4. `credit-service` (depends on Cosmos DB, Redis, Kafka)
+5. `transaction-service` (depends on Cosmos DB, Kafka)
+6. `fraud-detection-service` (depends on Cosmos DB, Kafka, Gemini AI)
+7. `yanki-service` (depends on Cosmos DB, Kafka)
 
 ## Test Summary by Service
 
@@ -25,15 +24,12 @@ Services must be tested in dependency order:
 |---------|-------------|------------|-----------------|
 | account-service | 7 | ~48 | 33%+ |
 | auth-service | 4 | ~20 | 25%+ |
-| config-server | 1 | 1 | Context load |
 | credit-service | 7 | ~54 | 22%+ |
 | customer-service | 7 | ~36 | 32%+ |
-| eureka-server | 0 | 0 | N/A |
 | fraud-detection-service | 6 | ~37 | 22%+ |
-| gateway-service | 0 | 0 | N/A |
 | transaction-service | 6 | ~52 | 28%+ |
 | yanki-service | 11 | ~68 | 25%+ |
-| **TOTAL** | **49** | **~316** | - |
+| **TOTAL** | **48** | **~315** | - |
 
 ---
 
@@ -202,7 +198,7 @@ mvn test
 
 ### Run all tests for all services:
 ```powershell
-$services = @("config-server","eureka-server","auth-service","customer-service","account-service","credit-service","transaction-service","fraud-detection-service","yanki-service","gateway-service")
+$services = @("auth-service","customer-service","account-service","credit-service","transaction-service","fraud-detection-service","yanki-service")
 foreach ($s in $services) {
     Write-Host "=== Testing $s ==="
     cd "C:\Users\eccalcin\OneDrive - NTT DATA EMEAL\NTTDATA\bootcamp\projects\banksystem\$s"
@@ -222,10 +218,10 @@ Report location: `target/site/jacoco/index.html`
 
 | Component | Required | Purpose |
 |-----------|----------|---------|
-| MongoDB | Yes | All services use @DataMongoTest (test profile) |
-| Kafka | No | Mocked with Mockito in unit tests |
-| Redis | No | Excluded via spring.autoconfigure.exclude |
-| Eureka | No | Not needed for unit tests |
-| Gemini AI | No | Mocked with TestAiConfig in fraud tests |
+| Cosmos DB (MongoDB API) | Yes | All services use `@DataMongoTest` (test profile) |
+| Kafka (Event Hubs) | No | Mocked with Mockito in unit tests |
+| Redis | No | Excluded via `spring.autoconfigure.exclude` |
+| Eureka / Config Server | No | Not part of the deployed platform |
+| Gemini AI | No | Mocked with `TestAiConfig` in fraud tests |
 
 **Note:** All unit tests run with mocked dependencies. No external infrastructure is required to run the test suite.

@@ -9,40 +9,52 @@ This directory contains the UML diagrams and OpenAPI contracts for the Banking S
 ```
 docs/
 ├── uml/
-│   ├── architecture-diagram.drawio          # Overall system architecture
-│   ├── hexagonal-architecture.drawio        # Hexagonal architecture pattern
-│   └── fraud-detection-sequence.drawio      # Fraud detection flow sequence
+│   ├── architecture-diagram.drawio          # Overall system architecture (AKS / APIM)
+│   ├── deployment-architecture.drawio        # AKS deployment architecture
+│   ├── microservices-interaction.drawio      # Inter-service interaction via APIM + Kafka
+│   ├── hexagonal-architecture.drawio         # Hexagonal architecture pattern
+│   ├── kafka-topics.drawio                   # Kafka topics (Event Hubs)
+│   └── fraud-detection-sequence.drawio       # Fraud detection flow sequence
+├── diagrams/
+│   ├── sequence-auth-jwt-flow.drawio         # Auth / JWT login flow
+│   ├── sequence-account-operations.drawio    # Account operations
+│   ├── sequence-credit-operations.drawio     # Credit operations
+│   ├── sequence-transaction-operations.drawio# Transaction operations
+│   ├── sequence-debt-check-kafka.drawio      # Debt-check via Kafka
+│   ├── sequence-fraud-detection.drawio       # Fraud detection
+│   ├── sequence-third-party-payment.drawio   # Third-party credit payment
+│   └── sequence-yanki-wallet.drawio          # Yanki wallet
 ├── openapi/
-│   ├── customer-service-api.yaml            # Customer Service API contract
-│   ├── account-service-api.yaml             # Account Service API contract
-│   ├── credit-service-api.yaml              # Credit Service API contract
-│   ├── transaction-service-api.yaml         # Transaction Service API contract
-│   └── fraud-detection-service-api.yaml     # Fraud Detection Service API contract
-└── README.md                                # This file
+│   ├── customer-service-api.yaml             # Customer Service API contract
+│   ├── account-service-api.yaml              # Account Service API contract
+│   ├── credit-service-api.yaml               # Credit Service API contract
+│   ├── transaction-service-api.yaml          # Transaction Service API contract
+│   ├── fraud-detection-service-api.yaml       # Fraud Detection Service API contract
+│   ├── auth-service-api.yaml                 # Auth Service API contract
+│   └── yanki-service-api.yaml                # Yanki Service API contract
+└── README.md                                 # This file
 ```
 
 ## UML Diagrams
 
 ### 1. Architecture Diagram (`architecture-diagram.drawio`)
 
-**Purpose**: Shows the overall microservices architecture of the banking system.
+**Purpose**: Shows the overall microservices architecture deployed on AKS, exposed through Azure API Management.
 
 **Key Components**:
-- External Clients (Postman/API)
-- API Gateway (Spring Cloud Gateway)
-- Config Server (Port 8888)
-- Eureka Server (Port 8761)
-- Business Microservices (Customer, Account, Credit, Transaction)
+- External Clients (Postman / API consumers)
+- Azure API Management (`apim-bankx`) — single entry point, JWT validation
+- 7 Business Microservices (Customer, Account, Credit, Transaction, Auth, Yanki, Fraud Detection)
 - Fraud Detection Service (with Spring AI + Gemini)
-- MongoDB databases (Database per Service pattern)
-- Apache Kafka (Message Broker)
+- Azure Cosmos DB (MongoDB API) — database per service
+- Azure Event Hubs (Kafka) — inter-service messaging
+- Azure Cache for Redis — catalog/cache acceleration
 
-**How to Use**:
-1. Open the `.drawio` file in [draw.io](https://app.diagrams.net/)
-2. Edit diagrams as needed
-3. Export to PNG/PDF for documentation
+### 2. Deployment Architecture (`deployment-architecture.drawio`)
 
-### 2. Hexagonal Architecture Diagram (`hexagonal-architecture.drawio`)
+**Purpose**: Shows how the services run on AKS (`aks-bankx`, namespace `bankx`) behind ingress-nginx, with Cosmos DB and Event Hubs as managed Azure services.
+
+### 3. Hexagonal Architecture Diagram (`hexagonal-architecture.drawio`)
 
 **Purpose**: Shows the internal structure of each microservice following hexagonal architecture (Ports & Adapters pattern).
 
@@ -53,24 +65,31 @@ docs/
 - **Outbound Ports**: Repository Ports, Event Publisher Ports
 - **Outbound Adapters**: Persistence Adapter, Kafka Producer, AI Adapter
 
-### 3. Fraud Detection Sequence Diagram (`fraud-detection-sequence.drawio`)
+### 4. Microservices Interaction (`microservices-interaction.drawio`)
+
+**Purpose**: Shows how clients reach services via APIM and how services communicate via Kafka (Event Hubs) — no REST calls between microservices.
+
+### 5. Fraud Detection Sequence Diagram (`fraud-detection-sequence.drawio`)
 
 **Purpose**: Shows the flow of transaction analysis for fraud detection.
 
 **Flow**:
-1. Client creates a transaction
-2. Transaction Service saves to MongoDB
-3. Transaction Service publishes event to Kafka
+1. Client creates a transaction (via APIM → transaction-service)
+2. Transaction Service saves to Cosmos DB (MongoDB API)
+3. Transaction Service publishes event to Kafka (Event Hubs)
 4. Fraud Detection Service consumes event
-5. Customer history is retrieved from MongoDB
+5. Customer / transaction history is retrieved from Cosmos DB
 6. Gemini AI analyzes the transaction
-7. Fraud alert is saved to MongoDB
+7. Fraud alert is saved to Cosmos DB
 
 ## OpenAPI Contracts
 
+All services are exposed under the APIM base URL `https://apim-bankx.azure-api.net`.
+Local development base URLs are shown for reference only.
+
 ### 1. Customer Service API (`customer-service-api.yaml`)
 
-**Base URL**: `http://localhost:8081`
+**Base URL (APIM)**: `https://apim-bankx.azure-api.net/api/v1/customers`
 
 **Endpoints**:
 - `POST /api/v1/customers` - Create customer
@@ -83,7 +102,7 @@ docs/
 
 ### 2. Account Service API (`account-service-api.yaml`)
 
-**Base URL**: `http://localhost:8082`
+**Base URL (APIM)**: `https://apim-bankx.azure-api.net/api/v1/accounts`
 
 **Endpoints**:
 - `POST /api/v1/accounts` - Create account
@@ -97,7 +116,7 @@ docs/
 
 ### 3. Credit Service API (`credit-service-api.yaml`)
 
-**Base URL**: `http://localhost:8083`
+**Base URL (APIM)**: `https://apim-bankx.azure-api.net/api/v1/credits`
 
 **Endpoints**:
 - `POST /api/v1/credits` - Create credit
@@ -111,7 +130,7 @@ docs/
 
 ### 4. Transaction Service API (`transaction-service-api.yaml`)
 
-**Base URL**: `http://localhost:8084`
+**Base URL (APIM)**: `https://apim-bankx.azure-api.net/api/v1/transactions`
 
 **Endpoints**:
 - `POST /api/v1/transactions` - Create transaction
@@ -128,7 +147,7 @@ docs/
 
 ### 5. Fraud Detection Service API (`fraud-detection-service-api.yaml`)
 
-**Base URL**: `http://localhost:8085`
+**Base URL (APIM)**: `https://apim-bankx.azure-api.net/api/v1/fraud`
 
 **Endpoints**:
 - `POST /api/v1/fraud/analyze/{transactionId}` - Analyze transaction
@@ -142,6 +161,27 @@ docs/
 - `GET /api/v1/fraud/risk-level/{riskLevel}` - Find by risk level
 - `GET /api/v1/fraud/reports/date-range` - Report by date range
 
+### 6. Auth Service API (`auth-service-api.yaml`)
+
+**Base URL (APIM)**: `https://apim-bankx.azure-api.net/api/v1/auth`
+
+**Endpoints**:
+- `POST /api/v1/auth/register` - Register user (public)
+- `POST /api/v1/auth/login` - Login → returns JWT (public)
+
+### 7. Yanki Service API (`yanki-service-api.yaml`)
+
+**Base URL (APIM)**: `https://apim-bankx.azure-api.net/api/v1/yanki/wallets`
+
+**Endpoints**:
+- `POST /api/v1/yanki/wallets` - Register wallet
+- `GET /api/v1/yanki/wallets/{id}` - Find wallet by ID
+- `GET /api/v1/yanki/wallets/phone/{phoneNumber}` - Find wallet by phone
+- `POST /api/v1/yanki/wallets/{id}/send` - Send payment (by phone)
+- `POST /api/v1/yanki/wallets/{id}/receive` - Receive payment (by phone)
+- `POST /api/v1/yanki/wallets/{id}/link-debit-card` - Link debit card
+- `GET /api/v1/yanki/wallets/{id}/balance` - Get balance
+
 ## Usage
 
 ### Viewing Diagrams
@@ -153,23 +193,17 @@ docs/
 
 ### Testing APIs
 
-1. Import the OpenAPI YAML file into Postman:
-   - Click "Import" in Postman
-   - Select "File" tab
-   - Choose the `.yaml` file
-   - Postman will auto-generate the collection
-
-2. Or use Swagger UI:
-   - Each microservice exposes Swagger UI at `/swagger-ui.html`
-   - Example: `http://localhost:8081/swagger-ui.html`
+1. Import the OpenAPI YAML file into Postman, or use the pre-built collections in `docs/postman/`.
+2. Set `baseUrl` to `https://apim-bankx.azure-api.net` and provide a `Bearer` JWT token.
 
 ## Microservices Summary
 
-| Service | Port | Database | API Documentation |
-|---------|------|----------|-------------------|
-| Config Server | 8888 | N/A | N/A |
-| Customer Service | 8081 | customer_db | `/swagger-ui.html` |
-| Account Service | 8082 | account_db | `/swagger-ui.html` |
-| Credit Service | 8083 | credit_db | `/swagger-ui.html` |
-| Transaction Service | 8084 | transaction_db | `/swagger-ui.html` |
-| Fraud Detection | 8085 | fraud_db | `/swagger-ui.html` |
+| Service | Database (Cosmos / MongoDB API) | Notes |
+|---------|--------------------------------|-------|
+| Customer Service | customer_db | Personal / Business customers |
+| Account Service | account_db | Savings, checking, fixed-term |
+| Credit Service | credit_db | Personal / Business loans, credit cards |
+| Transaction Service | transaction_db | Deposits, withdrawals, transfers |
+| Auth Service | auth_db | JWT issuance / validation |
+| Yanki Service | yanki_db | Mobile wallet (phone-based) |
+| Fraud Detection | fraud_db | Gemini AI risk analysis |

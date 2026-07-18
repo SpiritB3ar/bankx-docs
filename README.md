@@ -6,15 +6,24 @@ El código fuente de cada microservicio vive en sus propios repositorios; aquí 
 - 📮 **Colecciones Postman** validadas end-to-end contra APIM + JWT (`docs/postman/`)
 - 📐 **Diagramas UML / draw.io** (arquitectura, secuencia, despliegue, Kafka) (`docs/diagrams/`, `docs/uml/`)
 - 📝 **Contratos OpenAPI** de cada microservicio (`docs/openapi/`)
-- 📄 **Planes y especificaciones** de las 3 fases (`docs/superpowers/`)
 - 🧪 **Plan de pruebas** (`docs/TEST-PLAN.md`)
 
-## Arquitectura
+## Arquitectura (entorno productivo / AKS)
 
-- 7 microservicios: `customer`, `account`, `credit`, `transaction`, `auth`, `yanki`, `fraud-detection`
-- Comunicación **inter-microservicio SOLO por Kafka** (Event Hubs, SASL_SSL :9093)
-- Exposición vía **APIM** (`https://apim-bankx.azure-api.net`) + **JWT** (auth-service)
-- Base de datos **MongoDB** por microservicio (database-per-service) + **Redis** para catálogos
+- **7 microservicios funcionales**: `customer`, `account`, `credit`, `transaction`, `auth`, `yanki`, `fraud-detection`
+- **Exposición vía Azure API Management** (`https://apim-bankx.azure-api.net`) + **JWT** (auth-service). No hay Spring Cloud Gateway ni Eureka ni Config Server en producción.
+- **Comunicación inter-microservicio SOLO por Kafka** sobre **Azure Event Hubs** (`evhns-bankx`, SASL_SSL `:9093`)
+- **Persistencia**: **Azure Cosmos DB (API de MongoDB)** `cosmos-bankx` / DB `bankx`, patrón database-per-service
+- **Caché de catálogos**: Redis
+- **Orquestación**: AKS `aks-bankx` (RG `rg-bankx`, región `centralus`, namespace `bankx`) con ingress-nginx
+
+| Componente | Recurso Azure |
+|------------|---------------|
+| Cluster K8s | AKS `aks-bankx` (ns `bankx`) |
+| API Gateway | APIM `apim-bankx` (Consumption) |
+| Mensajería | Event Hubs `evhns-bankx` (Kafka) |
+| Base de datos | Cosmos DB `cosmos-bankx` (MongoDB API) |
+| Ingress | ingress-nginx |
 
 ## Cómo probar las APIs
 
@@ -30,11 +39,11 @@ El código fuente de cada microservicio vive en sus propios repositorios; aquí 
 
 | Diagrama | Archivo |
 |----------|---------|
-| Arquitectura general | `docs/uml/architecture-diagram.drawio` |
-| Arquitectura de despliegue | `docs/uml/deployment-architecture.drawio` |
+| Arquitectura general (AKS/APIM) | `docs/uml/architecture-diagram.drawio` |
+| Arquitectura de despliegue (AKS) | `docs/uml/deployment-architecture.drawio` |
 | Interacción de microservicios | `docs/uml/microservices-interaction.drawio` |
 | Arquitectura hexagonal | `docs/uml/hexagonal-architecture.drawio` |
-| Tópicos Kafka | `docs/uml/kafka-topics.drawio` |
+| Tópicos Kafka (Event Hubs) | `docs/uml/kafka-topics.drawio` |
 | Secuencia: auth JWT | `docs/diagrams/sequence-auth-jwt-flow.drawio` |
 | Secuencia: account | `docs/diagrams/sequence-account-operations.drawio` |
 | Secuencia: credit | `docs/diagrams/sequence-credit-operations.drawio` |
@@ -48,3 +57,8 @@ El código fuente de cada microservicio vive en sus propios repositorios; aquí 
 ## Contratos OpenAPI
 
 `account`, `auth`, `credit`, `customer`, `fraud-detection`, `transaction`, `yanki` → `docs/openapi/*.yaml`
+
+## Infraestructura como código
+
+El despliegue en Azure (AKS, APIM, Cosmos, Event Hubs, ingress) se gestiona en `infra-azure-bankx/`
+del repo principal del proyecto.

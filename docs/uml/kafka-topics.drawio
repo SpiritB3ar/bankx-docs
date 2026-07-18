@@ -10,8 +10,8 @@
         <mxCell id="subtitle" value="All topics, producers, consumers, and data flow between microservices" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=2" vertex="1" parent="1">
           <mxGeometry x="400" y="55" width="700" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kafka_broker" value="Apache Kafka&#xa;Message Broker&#xa;(localhost:9092)" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="850" y="400" width="220" height="80" as="geometry" />
+        <mxCell id="kafka_broker" value="Azure Event Hubs&#xa;(Kafka SASL_SSL)&#xa;evhns-bankx :9093" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="850" y="400" width="240" height="80" as="geometry" />
         </mxCell>
         <mxCell id="svc_account" value="Account Service&#xa;:8082" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="100" y="150" width="160" height="50" as="geometry" />
@@ -46,11 +46,11 @@
         <mxCell id="topic6" value="transaction-completed" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="1100" y="280" width="170" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="topic7" value="yanki-link-card" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="topic7" value="yanki-transfer" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="1100" y="820" width="150" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="topic8" value="debit-card-payment" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="1100" y="680" width="150" height="50" as="geometry" />
+        <mxCell id="topic8" value="credit-card events&#xa;(internal)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1100" y="680" width="160" height="50" as="geometry" />
         </mxCell>
         <mxCell id="t1_pub" value="DebtCheckProducer&#xa;sends" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;fontSize=9" edge="1" source="svc_account" target="topic1" parent="1">
           <mxGeometry relative="1" as="geometry" />
@@ -157,13 +157,13 @@
         <mxCell id="l7" value="6. transaction-completed: transaction-service notifies credit-service when transaction completes (debit card balance update)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
           <mxGeometry x="130" y="1165" width="700" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="l8" value="7. yanki-link-card: yanki-service publishes event when user links debit card (consumer pending)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+        <mxCell id="l8" value="7. yanki-transfer: yanki-service publishes wallet-to-wallet transfer events (send/receive by phone)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
           <mxGeometry x="130" y="1190" width="700" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="l9" value="8. debit-card-payment: credit-service publishes debit card payment event (consumer pending)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
+        <mxCell id="l9" value="8. credit-card / debit events: credit-service internal events for card operations" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;whiteSpace=wrap" vertex="1" parent="1">
           <mxGeometry x="130" y="1215" width="700" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="l_note" value="Note: Topics are auto-created by Kafka when first message is sent. Formal topic beans defined in KafkaTopicConfig for debt-check and credit-card-check topics." style="text;html=1;strokeColor=#b85450;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=2;whiteSpace=wrap" vertex="1" parent="1">
+        <mxCell id="l_note" value="Note: Topics run on Azure Event Hubs (Kafka protocol, SASL_SSL :9093). Inter-service communication is Kafka-only — no REST calls between microservices." style="text;html=1;strokeColor=#b85450;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontStyle=2;whiteSpace=wrap" vertex="1" parent="1">
           <mxGeometry x="130" y="1250" width="1000" height="20" as="geometry" />
         </mxCell>
       </root>
