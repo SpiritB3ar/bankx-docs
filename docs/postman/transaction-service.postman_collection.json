@@ -1,105 +1,271 @@
 {
-  "info": {
-    "name": "Transaction Service",
-    "description": "Microservice for managing bank transactions: deposits, withdrawals, transfers between accounts, and transaction history.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8084"
-    }
-  ],
-  "item": [
-    {
-      "name": "Create Transaction",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "transactionType": "DEPOSIT",
-            "accountId": "60f1a2b3c4d5e6f7a8b9c0d1",
-            "amount": 250.00,
-            "description": "Cash deposit at branch",
-            "currency": "PEN"
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/transactions",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "transactions"]
-        }
-      }
-    },
-    {
-      "name": "Find All Transactions",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/transactions",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "transactions"]
-        }
-      }
-    },
-    {
-      "name": "Find Transaction by ID",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/transactions/{{transactionId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "transactions", "{{transactionId}}"]
-        }
-      }
-    },
-    {
-      "name": "Find Transactions by Account",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/transactions/account/{{accountId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "transactions", "account", "{{accountId}}"]
-        }
-      }
-    },
-    {
-      "name": "Transfer Between Accounts",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "sourceAccountId": "60f1a2b3c4d5e6f7a8b9c0d1",
-            "destinationAccountId": "60f1a2b3c4d5e6f7a8b9c0d2",
-            "amount": 300.00,
-            "description": "Transfer to savings account",
-            "currency": "PEN"
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/transactions/transfer",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "transactions", "transfer"]
-        }
-      }
-    }
-  ]
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "type":  "string",
+                         "value":  "https://apim-bankx.azure-api.net"
+                     },
+                     {
+                         "key":  "token",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "customerId",
+                         "type":  "string",
+                         "value":  "6a5baf5c3a3fb2254c9abac6"
+                     },
+                     {
+                         "key":  "accountId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "destinationAccountId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "creditId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "transactionId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "walletId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "alertId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "status",
+                         "type":  "string",
+                         "value":  "PENDING"
+                     },
+                     {
+                         "key":  "riskLevel",
+                         "type":  "string",
+                         "value":  "HIGH"
+                     },
+                     {
+                         "key":  "startDate",
+                         "type":  "string",
+                         "value":  "2026-07-17T00:00:00Z"
+                     },
+                     {
+                         "key":  "endDate",
+                         "type":  "string",
+                         "value":  "2026-07-19T00:00:00Z"
+                     }
+                 ],
+    "info":  {
+                 "name":  "Transaction Service",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "item":  [
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{ \"transactionType\": \"DEPOSIT\", \"accountId\": \"{{accountId}}\", \"amount\": 500, \"currency\": \"PEN\" }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/transactions",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "transactions"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Create Deposit",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{ \"transactionType\": \"WITHDRAWAL\", \"accountId\": \"{{accountId}}\", \"amount\": 200, \"currency\": \"PEN\" }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/transactions",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "transactions"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Create Withdrawal",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{ \"transactionType\": \"TRANSFER\", \"accountId\": \"{{accountId}}\", \"destinationAccountId\": \"{{destinationAccountId}}\", \"amount\": 100, \"currency\": \"PEN\" }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/transactions",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "transactions"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Transfer Between Accounts",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/transactions",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "transactions"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Find All Transactions",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/transactions/{{transactionId}}",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "transactions",
+                                                              "{{transactionId}}"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Find Transaction by ID",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/transactions/account/{{accountId}}",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "transactions",
+                                                              "account",
+                                                              "{{accountId}}"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Find Transactions by Account",
+                     "response":  [
+
+                                  ]
+                 }
+             ],
+    "auth":  {
+                 "bearer":  [
+                                {
+                                    "key":  "token",
+                                    "type":  "string",
+                                    "value":  "{{token}}"
+                                }
+                            ],
+                 "type":  "bearer"
+             }
 }

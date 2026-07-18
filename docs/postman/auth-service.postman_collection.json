@@ -1,65 +1,114 @@
 {
-  "info": {
-    "name": "Auth Service",
-    "description": "Microservice for user authentication and authorization using JWT tokens.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8086"
-    }
-  ],
-  "item": [
-    {
-      "name": "Register User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "username": "jdoe",
-            "password": "SecureP@ssw0rd",
-            "email": "john.doe@email.com",
-            "roles": ["ROLE_USER"]
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/auth/register",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "auth", "register"]
-        }
-      }
-    },
-    {
-      "name": "Login",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "username": "jdoe",
-            "password": "SecureP@ssw0rd"
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/auth/login",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "auth", "login"]
-        }
-      }
-    }
-  ]
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "type":  "string",
+                         "value":  "https://apim-bankx.azure-api.net"
+                     },
+                     {
+                         "key":  "token",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "username",
+                         "type":  "string",
+                         "value":  "ana.lopez"
+                     },
+                     {
+                         "key":  "password",
+                         "type":  "string",
+                         "value":  "password123"
+                     }
+                 ],
+    "info":  {
+                 "name":  "Auth Service",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "item":  [
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "@{ \"username\": \"ana.lopez\", \"password\": \"password123\", \"email\": \"ana.lopez@bank.com\", \"customerId\": \"{{customerId}}\" }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/auth/register",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "auth",
+                                                              "register"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Register User",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "@{ \"username\": \"{{username}}\", \"password\": \"{{password}}\" }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/auth/login",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "auth",
+                                                              "login"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Login",
+                     "event":  [
+                                   {
+                                       "script":  {
+                                                      "exec":  [
+                                                                   "var json = pm.response.json();",
+                                                                   "pm.collectionVariables.set(\u0027token\u0027, json.accessToken);",
+                                                                   "console.log(\u0027token set\u0027);"
+                                                               ]
+                                                  },
+                                       "listen":  "test"
+                                   }
+                               ],
+                     "response":  [
+
+                                  ]
+                 }
+             ]
 }

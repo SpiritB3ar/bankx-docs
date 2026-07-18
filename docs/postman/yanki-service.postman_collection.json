@@ -1,142 +1,325 @@
 {
-  "info": {
-    "name": "Yanki Service",
-    "description": "Mobile wallet microservice (Yanki). Allows users to register wallets, send/receive payments via phone number, link debit cards, and check balances.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8088"
-    }
-  ],
-  "item": [
-    {
-      "name": "Register Wallet",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "documentNumber": "12345678",
-            "documentType": "DNI",
-            "phoneNumber": "+51987654321",
-            "imei": "356938035649820",
-            "email": "user@email.com"
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/yanki/wallets",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "yanki", "wallets"]
-        }
-      }
-    },
-    {
-      "name": "Get Wallet",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/yanki/wallets/{{walletId}}",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "yanki", "wallets", "{{walletId}}"]
-        }
-      }
-    },
-    {
-      "name": "Send Payment",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "senderWalletId": "60f1a2b3c4d5e6f7a8b9c0d1",
-            "recipientPhoneNumber": "+51912345678",
-            "amount": 50.00,
-            "description": "Payment for dinner"
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/yanki/wallets/send",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "yanki", "wallets", "send"]
-        }
-      }
-    },
-    {
-      "name": "Receive Payment",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "recipientWalletId": "60f1a2b3c4d5e6f7a8b9c0d2",
-            "senderPhoneNumber": "+51987654321",
-            "amount": 50.00,
-            "description": "Received payment"
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/yanki/wallets/receive",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "yanki", "wallets", "receive"]
-        }
-      }
-    },
-    {
-      "name": "Link Debit Card",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": {
-            "debitCardNumber": "4532015112830366",
-            "accountId": "60f1a2b3c4d5e6f7a8b9c0d1"
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/yanki/wallets/{{walletId}}/link-debit-card",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "yanki", "wallets", "{{walletId}}", "link-debit-card"]
-        }
-      }
-    },
-    {
-      "name": "Get Balance",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/yanki/wallets/{{walletId}}/balance",
-          "host": ["{{baseUrl}}"],
-          "path": ["api", "yanki", "wallets", "{{walletId}}", "balance"]
-        }
-      }
-    }
-  ]
+    "variable":  [
+                     {
+                         "key":  "baseUrl",
+                         "type":  "string",
+                         "value":  "https://apim-bankx.azure-api.net"
+                     },
+                     {
+                         "key":  "token",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "customerId",
+                         "type":  "string",
+                         "value":  "6a5baf5c3a3fb2254c9abac6"
+                     },
+                     {
+                         "key":  "accountId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "destinationAccountId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "creditId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "transactionId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "walletId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "debitCardId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "phoneNumber",
+                         "type":  "string",
+                         "value":  "998000001"
+                     },
+                     {
+                         "key":  "alertId",
+                         "type":  "string",
+                         "value":  ""
+                     },
+                     {
+                         "key":  "status",
+                         "type":  "string",
+                         "value":  "PENDING"
+                     },
+                     {
+                         "key":  "riskLevel",
+                         "type":  "string",
+                         "value":  "HIGH"
+                     },
+                     {
+                         "key":  "startDate",
+                         "type":  "string",
+                         "value":  "2026-07-17T00:00:00Z"
+                     },
+                     {
+                         "key":  "endDate",
+                         "type":  "string",
+                         "value":  "2026-07-19T00:00:00Z"
+                     }
+                 ],
+    "info":  {
+                 "name":  "Yanki Service",
+                 "schema":  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+             },
+    "item":  [
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{ \"documentType\": \"DNI\", \"documentNumber\": \"80000001\", \"phoneNumber\": \"998000001\", \"imei\": \"IMEI-Y1\", \"email\": \"y1@test.com\" }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/yanki/wallets",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "yanki",
+                                                              "wallets"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Register Wallet",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/yanki/wallets/{{walletId}}",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "yanki",
+                                                              "wallets"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Get Wallet by ID",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/yanki/wallets/phone/{{phoneNumber}}",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "yanki",
+                                                              "wallets",
+                                                              "phone"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Get Wallet by Phone",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{ \"destinationPhoneNumber\": \"998000002\", \"amount\": 25 }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/yanki/wallets/{{walletId}}/send",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "yanki",
+                                                              "wallets",
+                                                              "send"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Send Payment",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{ \"sourcePhoneNumber\": \"900000001\", \"amount\": 100 }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/yanki/wallets/{{walletId}}/receive",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "yanki",
+                                                              "wallets",
+                                                              "receive"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Receive Payment",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "body":  {
+                                                  "raw":  "{ \"debitCardId\": \"{{debitCardId}}\" }",
+                                                  "options":  {
+                                                                  "raw":  {
+                                                                              "language":  "json"
+                                                                          }
+                                                              },
+                                                  "mode":  "raw"
+                                              },
+                                     "method":  "POST",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/yanki/wallets/{{walletId}}/link-debit-card",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "yanki",
+                                                              "wallets",
+                                                              "link-debit-card"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Link Debit Card",
+                     "response":  [
+
+                                  ]
+                 },
+                 {
+                     "request":  {
+                                     "method":  "GET",
+                                     "url":  {
+                                                 "host":  [
+                                                              "{{baseUrl}}"
+                                                          ],
+                                                 "raw":  "{{baseUrl}}/api/v1/yanki/wallets/{{walletId}}/balance",
+                                                 "path":  [
+                                                              "api",
+                                                              "v1",
+                                                              "yanki",
+                                                              "wallets",
+                                                              "balance"
+                                                          ]
+                                             },
+                                     "header":  [
+                                                    {
+                                                        "key":  "Content-Type",
+                                                        "value":  "application/json"
+                                                    }
+                                                ]
+                                 },
+                     "name":  "Get Balance",
+                     "response":  [
+
+                                  ]
+                 }
+             ],
+    "auth":  {
+                 "bearer":  [
+                                {
+                                    "key":  "token",
+                                    "type":  "string",
+                                    "value":  "{{token}}"
+                                }
+                            ],
+                 "type":  "bearer"
+             }
 }
