@@ -1,0 +1,1397 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: BankX
+meta:
+  id: wrk_0efda4ca8bac4b6698e96c9850e4874c
+  created: 1784418928674
+  modified: 1784418928674
+  description: ""
+collection:
+  - name: Account Service
+    meta:
+      id: fld_f20cfe9ad8994aaa9a26e4ad2ff73d2f
+      created: 1784418928696
+      modified: 1784426230607
+      sortKey: -1784418928696
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/api/v1/accounts"
+        name: Create Account
+        meta:
+          id: req_071f7d4079ce497d92fd5ed3d2577263
+          created: 1784418928707
+          modified: 1784426224396
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928707
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"customerId": "{{ _.customerId }}",
+            	"accountType": "SAVINGS",
+            	"currency": "PEN",
+            	"initialBalance": 100,
+            	"holders": [
+            		{
+            			"customerId": "{{ _.customerId }}",
+            			"holderType": "PRIMARY"
+            		}
+            	]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        scripts:
+          afterResponse: |+
+            
+            const jsonBody = insomnia.response.json();
+
+            insomnia.environment.set("accountId", jsonBody.id);
+
+
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/accounts"
+        name: Find All Accounts
+        meta:
+          id: req_ff76f94bee134b77a963834504e4a276
+          created: 1784418928732
+          modified: 1784418928732
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928732
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/accounts/{{accountId}}"
+        name: Find Account by ID
+        meta:
+          id: req_ed35f9e80a03444facb942ccb54e31d2
+          created: 1784418928758
+          modified: 1784418928758
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928758
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/accounts/{{accountId}}"
+        name: Update Account
+        meta:
+          id: req_889f95c25b364d25853996b5c246dce0
+          created: 1784418928793
+          modified: 1784418928793
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928793
+        method: PUT
+        body:
+          mimeType: application/json
+          text: '{ "customerId": "{{ _.customerId }}", "accountType": "SAVINGS",
+            "balance": 1500.00, "currency": "PEN", "holders": [ { "customerId":
+            "{{ _.customerId }}", "holderType": "PRIMARY" } ] }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/accounts/{{accountId}}"
+        name: Delete Account
+        meta:
+          id: req_78c5ecff6e6f4ccab978115c93c98f6c
+          created: 1784418928819
+          modified: 1784418928819
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928819
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/accounts/customer/{{customerId}}"
+        name: Find Accounts by Customer
+        meta:
+          id: req_e8682b22afb84448bdc90b2f39a1ced8
+          created: 1784418928844
+          modified: 1784418928844
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928844
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Customer Service
+    meta:
+      id: fld_0f1702f29db24361a9a9fb9555a8dac6
+      created: 1784418928871
+      modified: 1784593771143
+      sortKey: -1784418928871
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/api/v1/customers"
+        name: Create Customer
+        meta:
+          id: req_28da069b6b154ff4ac2d9b09c7e4123d
+          created: 1784418928880
+          modified: 1784423942765
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928880
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"customerType": "PERSONAL",
+            	"customerProfile": "STANDARD",
+            	"personalData": {
+            		"firstName": "{% faker 'randomFirstName' %}",
+            		"lastName": "{% faker 'randomLastName' %}",
+            		"documentType": "DNI",
+            		"documentNumber": "{% faker 'randomInt' %}",
+            		"email": "{% faker 'randomEmail' %}",
+            		"phone": "{% faker 'randomPhoneNumber' %}"
+            	}
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        scripts:
+          afterResponse: |+
+            
+            const jsonBody = insomnia.response.json();
+
+            insomnia.environment.set("email", jsonBody.personalData.email);
+
+            insomnia.environment.set("customerId", jsonBody.id);
+
+
+
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/customers"
+        name: Find All Customers
+        meta:
+          id: req_0fbb7e1d36bf43ae81c14142d3973f28
+          created: 1784418928905
+          modified: 1784418928905
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928905
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/customers/{{customerId}}"
+        name: Find Customer by ID
+        meta:
+          id: req_38cee59891084ac7ae0913a24b80a70e
+          created: 1784418928932
+          modified: 1784418928932
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928932
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/customers/{{customerId}}"
+        name: Update Customer
+        meta:
+          id: req_dbb9b0c5297c416b97d569073353a227
+          created: 1784418928958
+          modified: 1784418928958
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928958
+        method: PUT
+        body:
+          mimeType: application/json
+          text: '{ "customerType": "PERSONAL", "personalData": { "firstName": "Ana",
+            "lastName": "Lopez", "documentType": "DNI", "documentNumber":
+            "12345678", "email": "ana.lopez@bank.com", "phone": "+51987654321"
+            }, "profile": "VIP" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/customers/{{customerId}}"
+        name: Delete Customer
+        meta:
+          id: req_442b5a568ed64f48a39262d1ad770d1c
+          created: 1784418928994
+          modified: 1784418928994
+          isPrivate: false
+          description: ""
+          sortKey: -1784418928994
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Transaction Service
+    meta:
+      id: fld_122229d6c46f4ce084ef8a6c8b4fecc9
+      created: 1784418929291
+      modified: 1784418929291
+      sortKey: -1784418929291
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/api/v1/transactions"
+        name: Create Deposit
+        meta:
+          id: req_02d995f8e26b4952ba225b0144a6de9b
+          created: 1784418929304
+          modified: 1784418929304
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929304
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "transactionType": "DEPOSIT", "accountId": "{{ _.accountId }}",
+            "amount": 500, "currency": "PEN" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/transactions"
+        name: Create Withdrawal
+        meta:
+          id: req_be7a6459924943a58075874514b79b91
+          created: 1784418929330
+          modified: 1784418929330
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929330
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "transactionType": "WITHDRAWAL", "accountId": "{{ _.accountId }}",
+            "amount": 200, "currency": "PEN" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/transactions"
+        name: Transfer Between Accounts
+        meta:
+          id: req_0364a2ecc9e542d18617e49f12832cab
+          created: 1784418929358
+          modified: 1784418929358
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929358
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "transactionType": "TRANSFER", "accountId": "{{ _.accountId }}",
+            "destinationAccountId": "{{ _.destinationAccountId }}", "amount":
+            100, "currency": "PEN" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/transactions"
+        name: Find All Transactions
+        meta:
+          id: req_246fb6bfaa3e44409bc390f8eb131fe1
+          created: 1784418929382
+          modified: 1784418977550
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929382
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/transactions/{{transactionId}}"
+        name: Find Transaction by ID
+        meta:
+          id: req_46a47c47200445f8b559c31d93829950
+          created: 1784418929410
+          modified: 1784418929410
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929410
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/transactions/account/{{accountId}}"
+        name: Find Transactions by Account
+        meta:
+          id: req_ab736507d6f84fd7a92250901482d9be
+          created: 1784418929434
+          modified: 1784418929434
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929434
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Fraud Detection Service
+    meta:
+      id: fld_ded2bdd97b534451b442349dea220378
+      created: 1784418929454
+      modified: 1784418929454
+      sortKey: -1784418929454
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/api/v1/fraud/analyze/{{transactionId}}"
+        name: Analyze Transaction (by ID)
+        meta:
+          id: req_241bda5143fe43548a15a19aeb5dfca0
+          created: 1784418929464
+          modified: 1784418929464
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929464
+        method: POST
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/fraud"
+        name: Find All Alerts
+        meta:
+          id: req_bc0387d6864c412f8a8572541b4d63d7
+          created: 1784418929487
+          modified: 1784418929487
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929487
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/fraud/{{alertId}}"
+        name: Find Alert by ID
+        meta:
+          id: req_097b9c131284469da7cde66d99706195
+          created: 1784418929513
+          modified: 1784418929513
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929513
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/fraud/customer/{{customerId}}"
+        name: Find Alerts by Customer
+        meta:
+          id: req_e73884e8a2b348878f8327a76a2f79b0
+          created: 1784418929535
+          modified: 1784418929535
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929535
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/fraud/status/{{status}}"
+        name: Find Alerts by Status
+        meta:
+          id: req_158acaacbb7243319ec2a2b8451e4140
+          created: 1784418929559
+          modified: 1784418929559
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929559
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/fraud/risk-level/{{riskLevel}}"
+        name: Find Alerts by Risk Level
+        meta:
+          id: req_75c75f55d34f4c75a8c7f8a5052072e2
+          created: 1784418929583
+          modified: 1784418929583
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929583
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/fraud/{{alertId}}"
+        name: Update Alert
+        meta:
+          id: req_88b9a5b6f6ef4302a08b3176c41018cb
+          created: 1784418929605
+          modified: 1784418929605
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929605
+        method: PUT
+        body:
+          mimeType: application/json
+          text: '{ "status": "RESOLVED", "comments": "Verified with customer - legitimate
+            transaction" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/fraud/{{alertId}}"
+        name: Delete Alert
+        meta:
+          id: req_608caab51f344a16b8243a13fff519e6
+          created: 1784418929628
+          modified: 1784418929628
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929628
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl
+          }}/api/v1/fraud/reports/date-range?startDate={{startDate}}&endDate={{\
+          endDate}}"
+        name: Report by Date Range
+        meta:
+          id: req_3964d545453444a8a6b2e775d2eda7fe
+          created: 1784418929653
+          modified: 1784418929653
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929653
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Yanki Service
+    meta:
+      id: fld_280347df520f428caa34f486bd538e98
+      created: 1784418929678
+      modified: 1784600141450
+      sortKey: -1784418929678
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/api/v1/yanki/wallets"
+        name: Register Wallet
+        meta:
+          id: req_01e75b2a92cc46548532e6725b1a5c49
+          created: 1784418929688
+          modified: 1784599909845
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929688
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"documentType": "DNI",
+            	"documentNumber": "81000001",
+            	"phoneNumber": "988000001",
+            	"imei": "IMEI-Y1",
+            	"email": "y1@test.com"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/yanki/wallets/{{walletId}}"
+        name: Get Wallet by ID
+        meta:
+          id: req_bd62de472949404587ecb022a60afd8d
+          created: 1784418929713
+          modified: 1784418929713
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929713
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/yanki/wallets/phone/{{phoneNumber}}"
+        name: Get Wallet by Phone
+        meta:
+          id: req_968c4fa107d24b18bb4a48eb95ef2be4
+          created: 1784418929738
+          modified: 1784418929738
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929738
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/yanki/wallets/{{walletId}}/send"
+        name: Send Payment
+        meta:
+          id: req_dc849572b3ef48a6a41a1c1ea206bce8
+          created: 1784418929777
+          modified: 1784418929777
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929777
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "destinationPhoneNumber": "998000002", "amount": 25 }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/yanki/wallets/{{walletId}}/receive"
+        name: Receive Payment
+        meta:
+          id: req_55b579d26ebb480db4f2ea2444add321
+          created: 1784418929806
+          modified: 1784418929806
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929806
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "sourcePhoneNumber": "900000001", "amount": 100 }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/yanki/wallets/{{walletId}}/link-debit-card"
+        name: Link Debit Card
+        meta:
+          id: req_c5e51406d3c34e48b7cdbb8f109ada6b
+          created: 1784418929839
+          modified: 1784418929839
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929839
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "debitCardId": "{{ _.debitCardId }}" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/yanki/wallets/{{walletId}}/balance"
+        name: Get Balance
+        meta:
+          id: req_2a627880c86142dcbc06fe3af83020a7
+          created: 1784418929880
+          modified: 1784418929880
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929880
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Auth Service
+    meta:
+      id: fld_341d4c6f938a4cde92ecd26988343201
+      created: 1784418929915
+      modified: 1784599781454
+      sortKey: -1784418929915
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/api/v1/auth/register"
+        name: Register User
+        meta:
+          id: req_2fd9eed22cf74f7dafa4676d38b6a850
+          created: 1784418929927
+          modified: 1784466382512
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929927
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"username": "{% faker 'randomUserName' %}",
+            	"password": "{{ _.password }}",
+            	"email": "{{ _.email }}",
+            	"customerId": "{{ _.customerId }}"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        scripts:
+          afterResponse: |+
+            
+            const jsonBody = insomnia.response.json();
+            if (!jsonBody) {
+                throw new Error("El cuerpo de la respuesta está vacío.");
+              }
+
+            insomnia.environment.set("username", jsonBody.username);
+
+
+
+
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/auth/login"
+        name: Login
+        meta:
+          id: req_6b0def697d024e508a30012145fb0d9f
+          created: 1784418929965
+          modified: 1784518779115
+          isPrivate: false
+          description: ""
+          sortKey: -1784418929965
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "username": "{{ _.username }}", "password": "{{ _.password }}" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+        scripts:
+          afterResponse: |+
+            const jsonBody = insomnia.response.json();
+
+            insomnia.environment.set("token", jsonBody.accessToken);
+
+
+
+
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Credit Service
+    meta:
+      id: fld_57f4b8d67c38495ea17fc81c6d2306d6
+      created: 1784419310622
+      modified: 1784599842064
+      sortKey: -1784419310622
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/api/v1/credits"
+        name: Create Credit (Credit Card)
+        meta:
+          id: req_f2b8e84ef15a40dba03477223b354516
+          created: 1784419310635
+          modified: 1784426036757
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310635
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"customerId": "{{ _.customerId }}",
+            	"creditType": "CREDIT_CARD",
+            	"creditLimit": {
+            		"approved": 2000,
+            		"used": 0,
+            		"currency": "PEN"
+            	},
+            	"paymentTerm": {
+            		"termMonths": 12,
+            		"annualInterestRate": 24,
+            		"monthlyPayment": 0
+            	}
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        scripts:
+          afterResponse: |+
+            
+
+            const jsonBody = insomnia.response.json();
+
+            insomnia.environment.set("creditId", jsonBody.id);
+
+
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits"
+        name: Create Credit (Personal)
+        meta:
+          id: req_4ffc1c4066ea44c08a938acfc5faf76b
+          created: 1784419310665
+          modified: 1784425677003
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310665
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"customerId": "{{ _.customerId }}",
+            	"creditType": "PERSONAL",
+            	"creditLimit": {
+            		"approved": 10000,
+            		"used": 0,
+            		"currency": "PEN"
+            	},
+            	"paymentTerm": {
+            		"termMonths": 24,
+            		"annualInterestRate": 18,
+            		"monthlyPayment": 500
+            	}
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        scripts:
+          afterResponse: |+
+            
+
+            const jsonBody = insomnia.response.json();
+
+            insomnia.environment.set("creditId", jsonBody.id);
+
+
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits"
+        name: Find All Credits
+        meta:
+          id: req_cff6edebf8da492fad528e1791d65fb0
+          created: 1784419310692
+          modified: 1784419310692
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310692
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits/{{creditId}}"
+        name: Find Credit by ID
+        meta:
+          id: req_ed8aba8a1c894fd49e41e0ded945d977
+          created: 1784419310716
+          modified: 1784419310716
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310716
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits/{{creditId}}"
+        name: Update Credit
+        meta:
+          id: req_1ba3385de29a4abbab2c7bc58c7b72df
+          created: 1784419310741
+          modified: 1784426088051
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310741
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"customerId": "{{ _.customerId }}",
+            	"creditType": "CREDIT_CARD",
+            	"creditLimit": {
+            		"approved": 2000,
+            		"used": 120,
+            		"currency": "PEN"
+            	},
+            	"paymentTerm": {
+            		"termMonths": 12,
+            		"annualInterestRate": 24,
+            		"monthlyPayment": 0
+            	}
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits/{{creditId}}"
+        name: Delete Credit
+        meta:
+          id: req_e615a56b2f1e47ac888fe636740fd77e
+          created: 1784419310771
+          modified: 1784419310771
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310771
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits/{{creditId}}/charge"
+        name: Charge Credit Card
+        meta:
+          id: req_1a0795069aa44a2f8c1ba679b9e037b5
+          created: 1784419310798
+          modified: 1784419310798
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310798
+        method: POST
+        body:
+          mimeType: application/json
+          text: '{ "amount": 200, "description": "Electronics purchase", "merchantName":
+            "ShopX" }'
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits/{{creditId}}/payment"
+        name: Make Payment
+        meta:
+          id: req_51faa0eec6684715b7984c78a7ae8a78
+          created: 1784419310824
+          modified: 1784425598271
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310824
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"amount": 80,
+            	"paymentMethod": "CASH"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/api/v1/credits/{{creditId}}/third-party-payment"
+        name: Third-Party Payment
+        meta:
+          id: req_d6e271bdd0ef44dd8585fc4e085c9f85
+          created: 1784419310850
+          modified: 1784426080280
+          isPrivate: false
+          description: ""
+          sortKey: -1784419310850
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"amount": 200,
+            	"paymentMethod": "CASH",
+            	"sourceAccountId": "{{ _.accountId }}"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: Bearer {{ _.token }}
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_3d5ebe98f19e1ba95cfd3e915294ee55c9955a08
+    created: 1784418956352
+    modified: 1784599842053
+environments:
+  name: BankX Environment
+  meta:
+    id: env_8a0f8853b19e402f917cbed716b946d5
+    created: 1784418928681
+    modified: 1784599842058
+    isPrivate: false
+  data:
+    baseUrl: https://apim-bankx.azure-api.net
+    token: eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJQYXVsYV9IaWxscyIsInVzZXJJZCI6IjZhNWViZGM1ODllZDViNTRjZWEwOWE5NiIsImN1c3RvbWVySWQiOiI2YTVlYmQ2YmYwMTVmMTEzOTUwMDI4MWIiLCJlbWFpbCI6IkJyZWFubmEuUGZlZmZlcjY5QGdtYWlsLmNvbSIsInJvbGVzIjpbIkNVU1RPTUVSIl0sImlzcyI6ImJhbmstc3lzdGVtIiwiaWF0IjoxNzg0NTk5NzgxLCJleHAiOjE3ODQ2MDA2ODF9.wn5V7dxvaUAaRPz3gAqryCK_pQmg6QURkEFek6gvgFWZH7DYi9KjIoDHpkymSySN
+    username: Paula_Hills
+    password: password123
+    email: Breanna.Pfeffer69@gmail.com
+    customerId: 6a5ebd6bf015f1139500281b
+    accountId: 6a5c2ef783448e6c8df9a0c3
+    creditId: 6a5ed5224408a02f7a10dec5
+    transactionId: 6a5eb3d37d069e79c9a6bd1a
+    walletId: ""
+    debitCardId: ""
+    destinationAccountId: ""
+    alertId: ""
+    phoneNumber: ""
+    startDate: 2026-01-01
+    endDate: 2026-12-31
+    riskLevel: LOW
+    status: ACTIVE

@@ -172,11 +172,18 @@ components:
           type: string
     CustomerRequest:
       type: object
+      required:
+        - customerType
+        - customerProfile
       properties:
         customerType:
-          $ref: '#/components/schemas/CustomerType'
+          type: string
+          nullable: false
+          enum: [PERSONAL, BUSINESS]
         customerProfile:
-          $ref: '#/components/schemas/CustomerProfile'
+          type: string
+          nullable: false
+          enum: [STANDARD, VIP, STANDARD_BUSINESS, PYME]
         personalData:
           $ref: '#/components/schemas/PersonalDataRequest'
         businessData:

@@ -182,13 +182,21 @@ components:
           $ref: '#/components/schemas/AccountHolderType'
     AccountRequest:
       type: object
+      required:
+        - customerId
+        - accountType
+        - currency
+        - initialBalance
+        - holders
       properties:
         customerId:
           type: string
+          nullable: false
         accountType:
           $ref: '#/components/schemas/AccountType'
         currency:
           type: string
+          nullable: false
         initialBalance:
           type: number
           format: decimal

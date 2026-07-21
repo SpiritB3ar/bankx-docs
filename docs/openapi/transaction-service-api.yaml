@@ -378,13 +378,21 @@ components:
         - UNDER_REVIEW
     TransactionRequest:
       type: object
+      required:
+        - transactionType
+        - customerId
+        - accountId
+        - amount
+        - currency
       properties:
         transactionType:
           $ref: '#/components/schemas/TransactionType'
         customerId:
           type: string
+          nullable: false
         accountId:
           type: string
+          nullable: false
         creditId:
           type: string
         destinationAccountId:
@@ -394,6 +402,7 @@ components:
           format: decimal
         currency:
           type: string
+          nullable: false
         description:
           type: string
     TransactionResponse:
@@ -434,16 +443,24 @@ components:
           format: decimal
     TransferRequest:
       type: object
+      required:
+        - sourceAccountId
+        - destinationAccountId
+        - amount
+        - currency
       properties:
         sourceAccountId:
           type: string
+          nullable: false
         destinationAccountId:
           type: string
+          nullable: false
         amount:
           type: number
           format: decimal
         currency:
           type: string
+          nullable: false
         description:
           type: string
         customerId:
